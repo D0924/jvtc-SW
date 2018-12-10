@@ -67,24 +67,26 @@ class Jvtc {
 					// }
 
 					const $ = cheerio.load(res.text);
-					const rex = /\((.*?)\)/;
 					const html = new String($("script").html())
-					const ms = html.match(rex);
-					// console.log(html);
-					// console.log(this.o);
+					if (html) {
 
-					if (ms && ms.length > 2) {
-						throw ms[1];
-					} else {
+						const rex = /alert\('(.*?)'\);/;
+						const ms = html.match(rex);
 
-						this.o.cookies += parsCookies(res.headers);
-						// console.log(this.o.cookies);
-
-						// 登陆成功标志
-						this.isLogin = true;
-						resolve([null, 0]);
+						if (ms && ms.length >= 2) {
+							
+							throw ms[1];
+							
+						}
 
 					}
+
+					this.o.cookies += parsCookies(res.headers);
+					// console.log(this.o.cookies);
+
+					// 登陆成功标志
+					this.isLogin = true;
+					resolve([null, 0]);
 
 				} catch (error) {
 					reject(error);
