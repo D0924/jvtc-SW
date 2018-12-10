@@ -123,31 +123,6 @@ class Jvtc {
 
 }
 
-function Main() {
-	const formdata = {
-		loginName: "172052267", loginPwd: "542679"
-	}
-
-	const jvtc = new Jvtc(formdata);
-
-	jvtc.login().then(async (a) => {
-		console.log(a);
-
-		const userinfo = await jvtc.getUserinfo()
-		console.log(userinfo);
-		
-		// jvtc_get("http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx", jvtc.o, (error, res) => {
-		// 	console.log(res.text);
-		// });
-		// jvtc_get("http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Class/MyStudent.aspx", jvtc.o, (error, res) => {
-		// 	console.log(res.text);
-		// });
-
-	})
-}
-
-Main();
-
 module.exports = Jvtc;
 
 
