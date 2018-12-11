@@ -2,7 +2,7 @@
 const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
 const { parsCookies, parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
 
-async function init() {
+async function jvtc_fun() {
 
   return new Promise((resolve, reject) => {
     jvtc_get(this.apiUrls.init, { cookies: "", args: "" }, (err, res) => {
@@ -26,4 +26,4 @@ async function init() {
 
 }
 
-module.exports = init;
+module.exports = jvtc_fun;

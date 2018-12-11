@@ -11,7 +11,9 @@ class Jvtc {
 		this.apiUrls = {
 			login: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
 			init: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
-			userinfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Class/MyStudent.aspx"
+			userinfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Class/MyStudent.aspx",
+			StuActive: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyAction.aspx",
+			StuActiveEvaluation:"http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppActionShow.aspx?MyUnit=&Id="
 		};
 
 		this.o = {

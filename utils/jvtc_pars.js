@@ -88,6 +88,70 @@ function parsUserinfo(html) {
 }
 
 
+function parsStuActive(html) {
+
+  const $ = cheerio.load(html), data = [
+
+  ];
+  /*
+   {
+      id:null,
+      name:null,
+      unit:null,
+      date:null,
+      type:null,
+      score:null,
+      stat:null
+    }
+  */
+
+  $('[class="white"] tr').not('.whitehead').each((i, v) => {
+    const $td = $(v).children('td')
+
+    if (!$td.children('a') || !$td.children('a').attr('href')) {
+      return;
+    }
+    // MyAction_View.aspx?Id=6123
+
+    try {
+      const id = $td
+        .children('a')
+        .attr('href')
+        .split('=')[1]
+        ,
+        name = $td
+          .children('a')
+          .text()
+        ,
+        unit = $($td.get(1)).text()
+        ,
+        date = $($td.get(2)).text()
+        ,
+        type = $($td.get(3)).text()
+        ,
+        score = $($td.get(6)).text()
+        ,
+        stat = $($td.get(7)).text()
+        ,
+        one = {
+          id,
+          name,
+          unit,
+          date,
+          type,
+          score,
+          stat
+        }
+      data.push(one)
+
+    } catch (error) {
+      // 不处理
+    }
+
+  });
+
+  return data;
+}
 
 
 
@@ -95,5 +159,6 @@ function parsUserinfo(html) {
 module.exports = {
   parsCookies,
   parsArgs,
-  parsUserinfo
+  parsUserinfo,
+  parsStuActive
 }

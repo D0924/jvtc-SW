@@ -3,18 +3,22 @@ const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
 const { parsCookies, parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
 
 
-async function login() {
+async function jvtc_fun() {
 
   const [e] = await this.init();
   // console.log(e,r);
   if (e) return ["初始化错误", -1];
+  
+  const args = {
+    ...this.o.args,
+    'Top1$UserName': this.loginName,
+    'Top1$PassWord': this.loginPwd
+  }
 
-  this.o.args['Top1$UserName'] = this.loginName;
-  this.o.args["Top1$PassWord"] = this.loginPwd;
   return new Promise((resolve, reject) => {
 
     // console.log(o.args);
-    jvtc_post(this.apiUrls.login, this.o, (err, res) => {
+    jvtc_post(this.apiUrls.login, { cookies: this.o.cookies, args }, (err, res) => {
       try {
         // console.log(this.o);
 
@@ -54,4 +58,4 @@ async function login() {
   });
 }
 
-module.exports = login;
+module.exports = jvtc_fun;
