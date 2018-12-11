@@ -1,4 +1,4 @@
-const cheerio = require('cheerio');
+const jvtcPrototype = require("../middles/jvtcPrototype.js");
 
 const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
 const { parsCookies, parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
@@ -22,108 +22,10 @@ class Jvtc {
 		this.isLogin = false;
 
 	}
-
-	async init() {
-
-		return new Promise((resolve, reject) => {
-			jvtc_get(this.apiUrls.init, { cookies: "", args: "" }, (err, res) => {
-				try {
-					const { o } = this;
-					o.cookies = parsCookies(res.headers)
-
-					o.args = parsArgs(res.text);
-					if (o.cookies && o.args) {
-						resolve([null, 0]);
-					} else {
-						throw "失败";
-					}
-				} catch (error) {
-					reject(error);
-				}
-			});
-		}).catch((error) => {
-			return [error, null];
-		})
-
-	}
-
-	async login() {
-
-		const [e] = await this.init();
-		// console.log(e,r);
-		if (e) return ["初始化错误", -1];
-
-		this.o.args['Top1$UserName'] = this.loginName;
-		this.o.args["Top1$PassWord"] = this.loginPwd;
-		return new Promise((resolve, reject) => {
-
-			// console.log(o.args);
-			jvtc_post(this.apiUrls.login, this.o, (err, res) => {
-				try {
-					// console.log(this.o);
-
-					// if (err) {
-					// 	throw err;
-					// }
-
-					const $ = cheerio.load(res.text);
-					const html = new String($("script").html())
-					if (html) {
-
-						const rex = /alert\('(.*?)'\);/;
-						const ms = html.match(rex);
-
-						if (ms && ms.length >= 2) {
-							
-							throw ms[1];
-							
-						}
-
-					}
-
-					this.o.cookies += parsCookies(res.headers);
-					// console.log(this.o.cookies);
-
-					// 登陆成功标志
-					this.isLogin = true;
-					resolve([null, 0]);
-
-				} catch (error) {
-					reject(error);
-				}
-			});
-
-		}).catch((error) => {
-			return [error, null];
-		});
-	}
-
-	async getUserinfo() {
-
-		return new Promise((resolve, reject) => {
-			const { o } = this;
-			jvtc_get(this.apiUrls.userinfo, o, (err, res) => {
-				try {
-					const { text } = res;
-					o.args = parsArgs(text);
-					const userinfo = parsUserinfo(text);
-
-					resolve([null, 0, userinfo]);
-
-
-				} catch (error) {
-					reject(error);
-				}
-			});
-		}).catch((error) => {
-			return [error, null, null];
-		})
-
-
-	}
-
-
 }
+
+jvtcPrototype.init(Jvtc);
+
 
 module.exports = Jvtc;
 
