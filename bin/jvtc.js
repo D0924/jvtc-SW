@@ -13,7 +13,8 @@ class Jvtc {
 			init: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
 			userinfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Class/MyStudent.aspx",
 			StuActive: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyAction.aspx",
-			StuActiveEvaluation:"http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppActionShow.aspx?MyUnit=&Id="
+			AppAction: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppAction.aspx?Id=",
+			WorkInfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx",
 		};
 
 		this.o = {

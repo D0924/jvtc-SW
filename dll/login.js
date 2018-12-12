@@ -14,6 +14,8 @@ async function jvtc_fun() {
     'Top1$UserName': this.loginName,
     'Top1$PassWord': this.loginPwd
   }
+  args['Top1$StuLogin.x'] = ~~(Math.random() * 30);
+  args['Top1$StuLogin.y'] = ~~(Math.random() * 30);
 
   return new Promise((resolve, reject) => {
 
@@ -42,7 +44,7 @@ async function jvtc_fun() {
         }
 
         this.o.cookies += parsCookies(res.headers);
-        // console.log(this.o.cookies);
+        // console.log(this.o);
 
         // 登陆成功标志
         this.isLogin = true;

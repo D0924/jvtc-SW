@@ -12,9 +12,6 @@ function parsArgs(html) {
   args.__VIEWSTATEGENERATOR = __VIEWSTATEGENERATOR;
   args.__EVENTVALIDATION = __EVENTVALIDATION;
 
-  args['Top1$StuLogin.x'] = ~~(Math.random() * 30);
-  args['Top1$StuLogin.y'] = ~~(Math.random() * 30);
-
   return args;
 }
 
@@ -153,12 +150,53 @@ function parsStuActive(html) {
   return data;
 }
 
+function parsWordInfo(html) {
 
+  const $ = cheerio.load(html), data = {
+    absence: null,
+    truant: null,
+    study: null,
+    Illegal: null,
+    Failing: null,
+    grade: null,
+    score: null,
+    flunk: null,
+    dorm: null
+  };
+  /*
+   {
+      id:null,
+      name:null,
+      unit:null,
+      date:null,
+      type:null,
+      score:null,
+      stat:null
+    }
+  */
+  const $style = $('span.STYLE1');
+  if (!$style || $style.length) {
+    throw "错误";
+  }
+  let i = 0;
+  for (const key in data) {
+
+    try {
+      data[key] = $($style.get(i++)).text();
+    } catch (error) {
+      data[key] = "0";
+    }
+
+  }
+
+  return data;
+}
 
 
 module.exports = {
   parsCookies,
   parsArgs,
   parsUserinfo,
-  parsStuActive
+  parsStuActive,
+  parsWordInfo
 }
