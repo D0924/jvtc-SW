@@ -3,7 +3,7 @@
 
 ## 已经实现功能
 
-[x] 登陆 login()
+- [x] 登陆 login()
 [x] 获取 学生信息 getUserinfo()
 [x] 获取 素拓活动列表 getStuActive()
 [x] 评价指定素拓活动 AppAction(素拓活动id)
