@@ -3,20 +3,20 @@
 
 ## 已经实现功能
 
-[x] 登陆 login()
-[x] 获取 学生信息 getUserinfo()
-[x] 获取 素拓活动列表 getStuActive()
-[x] 评价指定素拓活动 AppAction(素拓活动id)
-[x] 学工网首页展示信息 WorkInfo()
-[x] 获取当前ABCDEF类素拓得分 MyActionGetNum()
+- [x] 登陆 login()
+- [x] 获取 学生信息 getUserinfo()
+- [x] 获取 素拓活动列表 getStuActive()
+- [x] 评价指定素拓活动 AppAction(素拓活动id)
+- [x] 学工网首页展示信息 WorkInfo()
+- [x] 获取当前ABCDEF类素拓得分 MyActionGetNum()
 ## 未实现
-[] 宿舍卫生检查列表
-[] 日常请假申请
-[] 节假日请假申请
-[] 日常请假记录列表
-[] 节假日请假列表
+- [] 宿舍卫生检查列表
+- [] 日常请假申请
+- [] 节假日请假申请
+- [] 日常请假记录列表
+- [] 节假日请假列表
 
-[] 其他待定。。。
+- [] 其他待定。。。
 
 > 项目结构
 
