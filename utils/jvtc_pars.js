@@ -12,9 +12,6 @@ function parsArgs(html) {
   args.__VIEWSTATEGENERATOR = __VIEWSTATEGENERATOR;
   args.__EVENTVALIDATION = __EVENTVALIDATION;
 
-  args['Top1$StuLogin.x'] = ~~(Math.random() * 30);
-  args['Top1$StuLogin.y'] = ~~(Math.random() * 30);
-
   return args;
 }
 
@@ -88,12 +85,149 @@ function parsUserinfo(html) {
 }
 
 
+function parsStuActive(html) {
+
+  const $ = cheerio.load(html), data = [
+
+  ];
+  /*
+   {
+      id:null,
+      name:null,
+      unit:null,
+      date:null,
+      type:null,
+      score:null,
+      stat:null
+    }
+  */
+
+  $('[class="white"] tr').not('.whitehead').each((i, v) => {
+    const $td = $(v).children('td')
+
+    if (!$td.children('a') || !$td.children('a').attr('href')) {
+      return;
+    }
+    // MyAction_View.aspx?Id=6123
+
+    try {
+      const id = $td
+        .children('a')
+        .attr('href')
+        .split('=')[1]
+        ,
+        name = $td
+          .children('a')
+          .text()
+        ,
+        unit = $($td.get(1)).text()
+        ,
+        date = $($td.get(2)).text()
+        ,
+        type = $($td.get(3)).text()
+        ,
+        score = $($td.get(6)).text()
+        ,
+        stat = $($td.get(7)).text()
+        ,
+        one = {
+          id,
+          name,
+          unit,
+          date,
+          type,
+          score,
+          stat
+        }
+      data.push(one)
+
+    } catch (error) {
+      // 不处理
+    }
+
+  });
+
+  return data;
+}
+
+function parsWordInfo(html) {
+
+  const $ = cheerio.load(html), data = {
+    absence: null,
+    truant: null,
+    study: null,
+    Illegal: null,
+    Failing: null,
+    grade: null,
+    score: null,
+    flunk: null,
+    dorm: null
+  };
+  /*
+   {
+      id:null,
+      name:null,
+      unit:null,
+      date:null,
+      type:null,
+      score:null,
+      stat:null
+    }
+  */
+  const $style = $('span.STYLE1');
+  if (!$style || !$style.length) {
+    throw "错误";
+  }
+  let i = 0;
+  for (const key in data) {
+
+    try {
+      data[key] = $($style.get(i++)).text();
+    } catch (error) {
+      data[key] = "0";
+    }
+
+  }
+
+  return data;
+}
 
 
+function parsMyActionGetNum(html) {
 
+  const $ = cheerio.load(html), data = {
+    CountA1: null,
+    CountB1: null,
+    CountC1: null,
+    CountD1: null,
+    CountE1: null,
+    CountF1: null,
+    SunCount1: null,
+    Status: null
+  };
+
+  const $style = $('tr');
+
+  const keys = Object.keys(data);
+
+  keys.forEach(key => {
+    try {
+      data[key] = $style.find(`span#${key}`).text();
+    } catch (error) {
+
+    }
+  });
+
+
+  return data;
+}
+// 
 
 module.exports = {
   parsCookies,
   parsArgs,
-  parsUserinfo
+  parsUserinfo,
+  parsStuActive,
+  parsWordInfo,
+  parsMyActionGetNum
 }

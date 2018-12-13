@@ -1,20 +1,21 @@
 
 const { jvtc_get } = require('../utils/jvtc_request');
-const { parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
-
+const { parsArgs, parsMyActionGetNum } = require('../utils/jvtc_pars');
 
 async function jvtc_fun() {
 
   return new Promise((resolve, reject) => {
+
     const { o } = this;
-    jvtc_get(this.apiUrls.userinfo, o, (err, res) => {
+
+    jvtc_get(this.apiUrls.MyActionGetNum, o, (err, res) => {
       try {
         const { text } = res;
         o.args = parsArgs(text);
-        const userinfo = parsUserinfo(text);
 
-        resolve([null, 0, userinfo]);
+        const data = parsMyActionGetNum(text);
 
+        resolve([null, 0, data]);
 
       } catch (error) {
         reject(error);
