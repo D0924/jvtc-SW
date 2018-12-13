@@ -175,7 +175,7 @@ function parsWordInfo(html) {
     }
   */
   const $style = $('span.STYLE1');
-  if (!$style || $style.length) {
+  if (!$style || !$style.length) {
     throw "错误";
   }
   let i = 0;
@@ -193,10 +193,41 @@ function parsWordInfo(html) {
 }
 
 
+function parsMyActionGetNum(html) {
+
+  const $ = cheerio.load(html), data = {
+    CountA1: null,
+    CountB1: null,
+    CountC1: null,
+    CountD1: null,
+    CountE1: null,
+    CountF1: null,
+    SunCount1: null,
+    Status: null
+  };
+
+  const $style = $('tr');
+
+  const keys = Object.keys(data);
+
+  keys.forEach(key => {
+    try {
+      data[key] = $style.find(`span#${key}`).text();
+    } catch (error) {
+
+    }
+  });
+
+
+  return data;
+}
+// 
+
 module.exports = {
   parsCookies,
   parsArgs,
   parsUserinfo,
   parsStuActive,
-  parsWordInfo
+  parsWordInfo,
+  parsMyActionGetNum
 }
