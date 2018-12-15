@@ -9,9 +9,8 @@
 - [x] 评价指定素拓活动 AppAction(素拓活动id)
 - [x] 学工网首页展示信息 WorkInfo()
 - [x] 获取当前ABCDEF类素拓得分 MyActionGetNum()
-
+- [x] 宿舍卫生检查列表 StuEnlightenRoomScore()
 ## 未实现
-- [ ] 宿舍卫生检查列表
 - [ ] 日常请假申请
 - [ ] 节假日请假申请
 - [ ] 日常请假记录列表

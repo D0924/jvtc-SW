@@ -16,6 +16,7 @@ class Jvtc {
 			AppAction: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppAction.aspx?Id=",
 			WorkInfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx",
 			MyActionGetNum: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyActionGetNum.aspx",
+			StuEnlightenRoomScore:"http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Gardens/StuEnlightenRoomScore.aspx",
 		};
 
 		this.o = {
