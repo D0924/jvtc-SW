@@ -1,18 +1,18 @@
 const cheerio = require('cheerio');
-const {  jvtc_post } = require('../utils/jvtc_request');
+const { jvtc_post } = require('../utils/jvtc_request');
 const { parsCookies } = require('../utils/jvtc_pars');
 
 
-async function jvtc_fun() {
+async function jvtc_fun({ loginName, loginPwd }) {
 
   const [e] = await this.init();
   // console.log(e,r);
   if (e) return ["初始化错误", -1];
-  
+
   const args = {
     ...this.o.args,
-    'Top1$UserName': this.loginName,
-    'Top1$PassWord': this.loginPwd
+    'Top1$UserName': loginName,
+    'Top1$PassWord': loginPwd
   }
   args['Top1$StuLogin.x'] = ~~(Math.random() * 30);
   args['Top1$StuLogin.y'] = ~~(Math.random() * 30);

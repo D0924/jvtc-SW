@@ -192,7 +192,6 @@ function parsWordInfo(html) {
   return data;
 }
 
-
 function parsMyActionGetNum(html) {
 
   const $ = cheerio.load(html), data = {
@@ -221,7 +220,73 @@ function parsMyActionGetNum(html) {
 
   return data;
 }
-// 
+
+function StuEnlightenRoomScore(html) {
+
+  const $ = cheerio.load(html), data = [
+
+  ];
+  // console.log(html);
+  // console.log( $('[class="white"] tr'));
+
+  $('[class="white"] tr').not('.whitehead').each((i, v) => {
+    const $td = $(v).children('td')
+
+    // MyAction_View.aspx?Id=6123
+    // console.log($($td.get(0)).text());
+
+    try {
+      const dorm = $($td.get(0)).text().replace(/[\s\n\r\t]/g, "")
+        ,
+        score = $($td.get(3)).text().replace(/[\s\n\r\t]/g, "")
+        ,
+        grade = $($td.get(4)).text().replace(/[\s\n\r\t]/g, "") || "安全"
+        ,
+        source = $($td.get(5)).text().replace(/[\s\n\r\t]/g, "")
+        ,
+        time = $($td.get(6)).text().replace(/[\s\n\r\t]/g, "")
+        ,
+        week = $($td.get(7)).text().replace(/[\s\n\r\t]/g, "")
+        ,
+        one = {
+          dorm,
+          score,
+          grade,
+          source,
+          time,
+          week
+        }
+      data.push(one)
+
+    } catch (error) {
+      // 不处理
+      // console.log(error);
+
+    }
+
+  });
+
+  return data;
+}
+
+function parsePostData(ctx) {
+  
+  return new Promise((resolve, reject) => {
+    try {
+      let postdata = "";
+      ctx.req.addListener('data', (data) => {
+        postdata += data
+      })
+      ctx.req.addListener("end", function () {
+        resolve([null, postdata])
+      })
+    } catch (err) {
+      reject(err)
+    }
+  }).catch((err) => {
+    return [err, null];
+  })
+}
 
 module.exports = {
   parsCookies,
@@ -229,5 +294,7 @@ module.exports = {
   parsUserinfo,
   parsStuActive,
   parsWordInfo,
-  parsMyActionGetNum
+  parsMyActionGetNum,
+  StuEnlightenRoomScore,
+  parsePostData
 }

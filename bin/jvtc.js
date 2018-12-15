@@ -4,10 +4,8 @@ const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
 const { parsCookies, parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
 
 class Jvtc {
-	constructor({ loginName, loginPwd }) {
+	constructor() {
 
-		this.loginName = loginName;
-		this.loginPwd = loginPwd;
 		this.apiUrls = {
 			login: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
 			init: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
@@ -16,6 +14,7 @@ class Jvtc {
 			AppAction: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppAction.aspx?Id=",
 			WorkInfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx",
 			MyActionGetNum: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyActionGetNum.aspx",
+			StuEnlightenRoomScore:"http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Gardens/StuEnlightenRoomScore.aspx",
 		};
 
 		this.o = {
