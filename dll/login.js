@@ -1,12 +1,16 @@
 const cheerio = require('cheerio');
-const { jvtc_post } = require('../utils/jvtc_request');
-const { parsCookies } = require('../utils/jvtc_pars');
+const { jvtc_post } = require('../utlis/jvtc_request');
+const { parsCookies } = require('../utlis/jvtc_pars');
+const { login } = require('../apis/api');
 
 
 async function jvtc_fun({ loginName, loginPwd }) {
-
+  console.log(this.init , "----");
+  
   const [e] = await this.init();
   // console.log(e,r);
+  // console.log(e);
+  
   if (e) return ["初始化错误", -1];
 
   const args = {
@@ -20,7 +24,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
   return new Promise((resolve, reject) => {
 
     // console.log(o.args);
-    jvtc_post(this.apiUrls.login, { cookies: this.o.cookies, args }, (err, res) => {
+    jvtc_post(login, { cookies: this.o.cookies, args }, (err, res) => {
       try {
         // console.log(this.o);
 

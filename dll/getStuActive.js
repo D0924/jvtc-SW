@@ -1,6 +1,7 @@
 
-const { jvtc_get } = require('../utils/jvtc_request');
-const {  parsArgs, parsStuActive} = require('../utils/jvtc_pars');
+const { jvtc_get } = require('../utlis/jvtc_request');
+const {  parsArgs, parsStuActive} = require('../utlis/jvtc_pars');
+const { StuActive } = require('../apis/api');
 
 async function jvtc_fun() {
 
@@ -8,7 +9,7 @@ async function jvtc_fun() {
 
     const { o } = this;
 
-    jvtc_get(this.apiUrls.StuActive, o, (err, res) => {
+    jvtc_get(StuActive, o, (err, res) => {
       try {
         const { text } = res;
         o.args = parsArgs(text);

@@ -26,20 +26,24 @@
 
 * bin 项目主要的程序 
   * jvtc.js 主程序
-* utils 帮助工具 函数
+* utlis 帮助工具 函数
 * dll 功能目录
 * routes 路由目录
 * middles 中间件目录
 * app.js 主入口 
 
+## 初始化 
+
+1. 将项目 “下载” 到本地 
+2. 运行 npm i 下载依赖
 
 ## api 使用 
 
-> 运行 npm run app 日志信息会输出 地址和端口 复制然后 浏览器打开
-> 登陆接口 为 /login post 传入json数据 
-> {"loginName":"账号", "loginPwd":"密码"}
-> 返回  {"code":状态值,"message":信息}
-> code:0 表示登陆成功 所有接口都是这样的 其他code会返回对应的信息
+> ## 运行 npm run app 日志信息会输出 地址和端口 复制然后 浏览器打开
+> * 登陆接口 为 /login post 传入json数据 
+> * {"loginName":"账号", "loginPwd":"密码"}
+> * 返回  {"code":状态值,"message":信息}
+> * code:0 表示登陆成功 所有接口都是这样的 其他code会返回对应的信息
 
 ## 功能
 
