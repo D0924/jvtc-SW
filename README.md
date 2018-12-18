@@ -39,11 +39,35 @@
 
 ## api 使用 
 
-> ## 运行 npm run app 日志信息会输出 地址和端口 复制然后 浏览器打开
+> ### 运行 npm run app 日志信息会输出 地址和端口 复制然后 浏览器打开
 > * 登陆接口 为 /login post 传入json数据 
 > * {"loginName":"账号", "loginPwd":"密码"}
 > * 返回  {"code":状态值,"message":信息}
 > * code:0 表示登陆成功 所有接口都是这样的 其他code会返回对应的信息
+
+## 列表
+
+```http
+
+1. POST /AppAction   // 素拓活动评价
+  // 传入 [{"id":素拓活动id}]
+
+2. GET /     // 首页
+
+3. POST /login    // 学工网登陆
+  // 传入 {"loginName":"学号", "loginPwd":"密码"}
+
+4. GET /MyActionGetNum // 获取当前各类素拓分
+  
+6. GET /getStuActive  //获取素拓活动列表
+
+7. GET /StuEnlightenRoomScore // 查寝列表
+
+8. GET /user_info   //个人信息
+
+9. GET /WorkInfo    // 首页 本学期 个人信息简介
+
+```
 
 ## 功能
 
