@@ -2,10 +2,6 @@ const { parsePostData } = require('../utlis/jvtc_pars');
 
 async function fun(ctx, next) {
 
-  let n = ctx.session.aa || 0;
-  ctx.session.aa = ++n;
-  console.log(ctx.session.aa);
-
   try {
     
     const { jvtc } = ctx.session;
@@ -29,11 +25,10 @@ async function fun(ctx, next) {
 
   } catch (error) {
     console.log(error);
-    
     ctx.body = { code: -1, message: error };
   }
 
-  await next();
+  next();
 }
 
 module.exports = {

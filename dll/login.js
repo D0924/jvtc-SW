@@ -5,7 +5,7 @@ const { login } = require('../apis/api');
 
 
 async function jvtc_fun({ loginName, loginPwd }) {
-  console.log(this.init , "----");
+  // console.log(this.init , "----");
   
   const [e] = await this.init();
   // console.log(e,r);

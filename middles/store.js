@@ -4,15 +4,15 @@ const { Store } = require("koa-session2");
 console.log(Store);
 
 class RedisStore extends Store {
-    constructor() {
+    constructor({ host = "127.0.0.1", password = "", port = 6379, family = 4 } = {}) {
         super();
         this.redis = new Redis({
-            port: 6379,          // Redis port
-            host: '127.0.0.1',   // Redis host
+            port,          // Redis port
+            host,   // Redis host
             family: 4,           // 4 (IPv4) or 6 (IPv6)
-            password: '',
+            password,
             db: 0
-          });
+        });
     }
 
     async get(sid, ctx) {
@@ -20,11 +20,11 @@ class RedisStore extends Store {
         return JSON.parse(data);
     }
 
-    async set(session, { sid =  this.getID(24), maxAge = 1000000 } = {}, ctx) {
+    async set(session, { sid = this.getID(24), maxAge = 1000000 } = {}, ctx) {
         try {
             // Use redis set EX to automatically drop expired sessions
             await this.redis.set(`SESSION:${sid}`, JSON.stringify(session), 'EX', maxAge / 1000);
-        } catch (e) {}
+        } catch (e) { }
         return sid;
     }
 
