@@ -12,7 +12,7 @@ async function fun(ctx, next) {
       throw "登录超时";
     }
     
-    const [error, code, data] = await new global.Jvtc(jvtc).getUserinfo();
+    const [error, code, data] = await new global.Jvtc(jvtc).StuEnlightenRoomScore();
     // console.log("===++");
 
     if (!error && code === 0) {
@@ -32,5 +32,5 @@ async function fun(ctx, next) {
 }
 
 module.exports = {
-  'GET /user_info': fun
+  'GET /StuEnlightenRoomScore': fun
 }

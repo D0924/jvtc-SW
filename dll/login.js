@@ -51,7 +51,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
         // console.log(this.o);
 
         // 登陆成功标志
-        this.isLogin = true;
+        // this.isLogin = true;
         resolve([null, 0]);
 
       } catch (error) {

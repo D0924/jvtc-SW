@@ -10,8 +10,10 @@ const jvtc_dll = fs.readdirSync(route_dir);
 jvtc_dll.forEach(dllname => {
   const route = require(path.join(route_dir, dllname));
   for (const key in route) {
-    if (route.hasOwnProperty(key)) {
 
+    if (route.hasOwnProperty(key)) {
+      console.log(key);
+      
       const fun = route[key];
 
       const [method, url] = key.split(" ")

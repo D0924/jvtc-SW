@@ -22,6 +22,7 @@ async function jvtc_fun() {
         reject(error);
       }
     });
+    
   }).catch((error) => {
     return [error, null, null];
   })

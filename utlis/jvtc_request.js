@@ -6,6 +6,7 @@ charset(superagent); //设置字符
 
 function jvtc_post(url, { cookies, args }, fn) {
 	superagent.post(url)
+		.timeout(5 * 1000)
 		.set('Cookie', cookies)
 		// // 
 		.type("form")
@@ -25,6 +26,7 @@ function jvtc_get(url, { cookies, args }, fn) {
 
 	superagent.get(url)
 		.set('Cookie', cookies)
+		.timeout(5 * 1000)
 		// // 
 		// .type("form")
 		// .use(nocache)
@@ -39,6 +41,6 @@ function jvtc_get(url, { cookies, args }, fn) {
 }
 
 module.exports = {
-  jvtc_get,
-  jvtc_post
+	jvtc_get,
+	jvtc_post
 }
