@@ -1,6 +1,10 @@
 # jvtc-SW
 学工平台API接口
 
+# 线上地址
+
+http://api.ncgame.cc/jvtc/*
+
 ## 已经实现webApi接口
 ## 列表
 
