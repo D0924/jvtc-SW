@@ -3,13 +3,29 @@ const Koa = require('koa');
 const router = require('./middles/jvtcRoutes');
 const Store = require('./middles/store');
 const session = require('koa-session2');
+const KoaCors = require('koa-cors');
+
 const Jvtc = require('./bin/jvtc');
 const localFilter = require('./Interceptor/localFilter');
+
+
 global.Jvtc = Jvtc;
 
 const port = 3214;
 
 const app = new Koa();
+
+app.use(KoaCors({
+  origin: function (ctx) {
+    // if (ctx.url === '/test') {
+    //   return "*"; // 允许来自所有域名请求
+    // }
+    console.log(ctx.header.origin);
+
+    return ctx.header.origin || ctx.origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
+  },
+
+}));
 
 app.use(session({
   key: "JVTC",

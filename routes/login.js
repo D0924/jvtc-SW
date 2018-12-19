@@ -17,6 +17,10 @@ async function fun(ctx, next) {
       throw "账号密码不规范";
     }
 
+    console.log({
+      loginName, loginPwd
+    });
+
     const jvtc = new global.Jvtc();
 
     const [errmsg, code] = await jvtc.login({ loginName, loginPwd });
@@ -24,18 +28,20 @@ async function fun(ctx, next) {
     // console.log(jvtc.o,'==========')
 
     if (code == 0) {
+      console.log("登陆成功");
+
       ctx.session.jvtc = jvtc.o;
       // Redis 有问题 会导致 ctx.body 无法 起到作用 (暂时不知道怎么解决)
     }
 
-    ctx.body = { code, message: errmsg || ""};
+    ctx.body = { code, message: errmsg || "" };
 
   } catch (error) {
     console.log(error);
 
     ctx.body = { code: -1, message: error.message || error };
   }
-  
+
   await next();
 
 }

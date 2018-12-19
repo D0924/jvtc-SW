@@ -4,7 +4,7 @@ const filter = function (filters_url) {
 
   return async (ctx, next) => {
     const { url,originalUrl } = ctx;
-    console.log("===");
+
     console.log(url,originalUrl);
     
     if (filters_url.indexOf(url) != -1) {
