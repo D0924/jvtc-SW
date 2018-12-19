@@ -6,11 +6,15 @@ const { login } = require('../apis/api');
 
 async function jvtc_fun({ loginName, loginPwd }) {
   // console.log(this.init , "----");
-  
+// 简单过滤一下账号密码
+  if (!/^([1-9][0-9]+)$/.test(loginName) || !/^([^'"]+)$/.test(loginPwd)) {
+    return ["传入的参数错误", -1];
+  }
+
   const [e] = await this.init();
   // console.log(e,r);
   // console.log(e);
-  
+
   if (e) return ["初始化错误", -1];
 
   const args = {
