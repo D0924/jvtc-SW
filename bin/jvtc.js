@@ -1,34 +1,18 @@
 const jvtcPrototype = require("../middles/jvtcPrototype.js");
 
-const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
-const { parsCookies, parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
-
 class Jvtc {
-	constructor() {
-
-		this.apiUrls = {
-			login: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
-			init: "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html",
-			userinfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Class/MyStudent.aspx",
-			StuActive: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyAction.aspx",
-			AppAction: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppAction.aspx?Id=",
-			WorkInfo: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx",
-			MyActionGetNum: "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyActionGetNum.aspx",
-			StuEnlightenRoomScore:"http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Gardens/StuEnlightenRoomScore.aspx",
-		};
+	constructor({cookies,args} = {args:{}}) {
 
 		this.o = {
-			cookies: "",
-			args: {}
+			cookies: cookies,
+			args: args
 		};
 
-		this.isLogin = false;
-
 	}
+
 }
 
 jvtcPrototype.init(Jvtc);
-
 
 module.exports = Jvtc;
 

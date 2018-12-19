@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
-const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
-const { parsArgs } = require('../utils/jvtc_pars');
+const { jvtc_get, jvtc_post } = require('../utlis/jvtc_request');
+const { parsArgs } = require('../utlis/jvtc_pars');
+const { AppAction } = require('../apis/api');
 
 
 async function jvtc_fun(id) {
@@ -9,9 +10,9 @@ async function jvtc_fun(id) {
   return new Promise((resolve, reject) => {
     // console.log(this.o);
 
-    // console.log(this.apiUrls.AppAction + id,this.o.cookies);
+    // console.log(AppAction + id,this.o.cookies);
 
-    jvtc_get(this.apiUrls.AppAction + id, { cookies: this.o.cookies, args: "" }, (err, res) => {
+    jvtc_get(AppAction + id, { cookies: this.o.cookies, args: "" }, (err, res) => {
       const { text } = res;
       this.o.args = parsArgs(text);
 
@@ -23,7 +24,7 @@ async function jvtc_fun(id) {
       }
       //
 
-      jvtc_post(this.apiUrls.AppAction + id, { cookies: this.o.cookies, args }, (err, res) => {
+      jvtc_post(AppAction + id, { cookies: this.o.cookies, args }, (err, res) => {
         try {
           // console.log(this.o);
 

@@ -18,12 +18,15 @@ function init(Jvtc) {
 
   console.log('\033[40;32m加载初始化对象中\033[0m');
 
-  Object.assign(Jvtc.prototype, {
+  const _Jvtc = Object.assign(Jvtc.prototype, {
     ...dlls
   })
 
+  console.log(_Jvtc);
+  console.log(Jvtc);
   console.log('\033[40;32m加载初始化对象完成\033[0m');
-
+  
+  return _Jvtc;
 
 }
 

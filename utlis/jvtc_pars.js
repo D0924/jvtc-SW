@@ -221,7 +221,7 @@ function parsMyActionGetNum(html) {
   return data;
 }
 
-function StuEnlightenRoomScore(html) {
+function parsStuEnlightenRoomScore(html) {
 
   const $ = cheerio.load(html), data = [
 
@@ -295,6 +295,6 @@ module.exports = {
   parsStuActive,
   parsWordInfo,
   parsMyActionGetNum,
-  StuEnlightenRoomScore,
+  parsStuEnlightenRoomScore,
   parsePostData
 }

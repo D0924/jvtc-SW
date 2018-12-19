@@ -1,11 +1,12 @@
 
-const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
-const { parsCookies, parsArgs } = require('../utils/jvtc_pars');
+const { jvtc_get } = require('../utlis/jvtc_request');
+const { parsCookies, parsArgs } = require('../utlis/jvtc_pars');
+const { init } = require('../apis/api');
 
 async function jvtc_fun() {
 
   return new Promise((resolve, reject) => {
-    jvtc_get(this.apiUrls.init, { cookies: "", args: "" }, (err, res) => {
+    jvtc_get(init, { cookies: "", args: "" }, (err, res) => {
       try {
         const { o } = this;
         o.cookies = parsCookies(res.headers)

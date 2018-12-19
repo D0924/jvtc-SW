@@ -1,6 +1,7 @@
 
-const { jvtc_get } = require('../utils/jvtc_request');
-const {  parsArgs, StuEnlightenRoomScore} = require('../utils/jvtc_pars');
+const { jvtc_get } = require('../utlis/jvtc_request');
+const {  parsArgs, parsStuEnlightenRoomScore} = require('../utlis/jvtc_pars');
+const { StuEnlightenRoomScore } = require('../apis/api');
 
 async function jvtc_fun() {
 
@@ -8,12 +9,12 @@ async function jvtc_fun() {
 
     const { o } = this;
 
-    jvtc_get(this.apiUrls.StuEnlightenRoomScore, o, (err, res) => {
+    jvtc_get(StuEnlightenRoomScore, o, (err, res) => {
       try {
         const { text } = res;
         o.args = parsArgs(text);
         
-        const data = StuEnlightenRoomScore(text);
+        const data = parsStuEnlightenRoomScore(text);
 
         resolve([null, 0, data]);
 
