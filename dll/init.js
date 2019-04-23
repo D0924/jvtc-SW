@@ -9,9 +9,12 @@ async function jvtc_fun() {
     jvtc_get(init, { cookies: "", args: "" }, (err, res) => {
       try {
         const { o } = this;
+        
         o.cookies = parsCookies(res.headers)
 
         o.args = parsArgs(res.text);
+        // console.log(o.args);
+        
         if (o.cookies && o.args) {
           resolve([null, 0]);
         } else {

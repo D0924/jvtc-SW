@@ -1,5 +1,6 @@
-const login = "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html";
-const init = "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html";
+const login = "http://xz.jvtc.jx.cn/JVTC_XG/UserLogin.html";
+const init = "http://xz.jvtc.jx.cn/JVTC_XG/UserLogin.html";
+const img_code = "http://xz.jvtc.jx.cn/JVTC_XG/default3.html";
 const userinfo = "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/Class/MyStudent.aspx";
 const StuActive = "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/MyAction.aspx";
 const AppAction = "http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/StuActive/AppAction.aspx?Id=";
@@ -16,4 +17,5 @@ module.exports = {
   WorkInfo,
   MyActionGetNum,
   StuEnlightenRoomScore,
+  img_code
 }

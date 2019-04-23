@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "node ./test/main.js",
-    "dev": "supervisor ./app.js",
+    "dev": "cross-env NODE_ENV=development supervisor ./app.js",
+    "serve": "cross-env NODE_ENV=production supervisor ./app.js",
     "app": "node ./app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "baidu-aip-sdk": "^2.3.9",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
+    "images": "^3.0.2",
     "ioredis": "^4.3.0",
     "koa": "^2.6.2",
     "koa-cors": "0.0.16",
@@ -23,6 +26,7 @@
     "superagent-no-cache": "^0.1.1"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "supervisor": "^0.12.0"
   }
 }
