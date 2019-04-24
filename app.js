@@ -1,17 +1,12 @@
 const Koa = require('koa');
-// const router = require('koa-router')();
-const router = require('./middles/jvtcRoutes');
-const Store = require('./middles/store');
-const session = require('koa-session2');
-const KoaCors = require('koa-cors');
+const jwt = require('koa-jwt');
+const router = require('./middles/router');
+const redisStore = require('./middles/store');
+const jvtc_jwt = require('./middles/jvtc_jwt');
+const KoaCors = require('koa2-cors');
 
 const Jvtc = require('./bin/jvtc');
-const localFilter = require('./Interceptor/localFilter');
-
-
-global.Jvtc = Jvtc;
-
-const port = 3214;
+const { SECRET_OR_PRIVATE_KEY, FILTERS_URL, PORT } = require(process.env.NODE_ENV == 'development' ? './ocr.config.dev' : './ocr.config')
 
 const app = new Koa();
 
@@ -20,28 +15,37 @@ app.use(KoaCors({
     // if (ctx.url === '/test') {
     //   return "*"; // 允许来自所有域名请求
     // }
-    console.log("来源：",ctx.header.origin);
-
-    return ctx.header.origin || ctx.origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
+    const origin = ctx.header.origin || ctx.origin;
+    console.log("Time:" + new Date(), "来源:", origin);
+    return origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
   },
-
 }));
 
-app.use(session({
-  key: "JVTC",
-  maxAge: 2 * 60 * 60 * 1000, //两个小时过期
-  store: new Store()
-}))
+app.use(async (ctx, next) => {
+  await next().catch((err) => {
+    if (401 == err.status) {
+      ctx.status = 401;
+      ctx.body = {
+        code: ctx.status,
+        msg: "身份验证失败"
+      };
+    } else {
+      throw err;
+    }
+  });
+});
 
-const filters_url = ['/', '/login'];
+app.use(jwt({ secret: SECRET_OR_PRIVATE_KEY }).unless({ path: FILTERS_URL }));
 
-app.use(localFilter(filters_url));
-app.use(router());
+app.use(redisStore());
 
-app.use(ctx => {
-  ctx.session.refresh();
-})
+app.use(jvtc_jwt(SECRET_OR_PRIVATE_KEY));
 
-app.listen(3214, () => {
-  console.log(`地址：http://localhost:${port}`);
+app.use(Jvtc());
+
+app.use(router.routes())
+  .use(router.allowedMethods());
+
+app.listen(PORT, () => {
+  console.log(`地址：http://localhost:${PORT}`);
 });

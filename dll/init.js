@@ -13,7 +13,6 @@ async function jvtc_fun() {
         o.cookies = parsCookies(res.headers)
 
         o.args = parsArgs(res.text);
-        // console.log(o.args);
         
         if (o.cookies && o.args) {
           resolve([null, 0]);

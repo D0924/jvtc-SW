@@ -21,7 +21,7 @@ function jvtc_post(url, { cookies, args }, fn) {
 		.end(fn)
 }
 
-function jvtc_get(url, { cookies, args }, fn) {
+function jvtc_get(url, { cookies, args } = {}, fn) {
 	// console.log(cookies);
 
 	superagent.get(url)

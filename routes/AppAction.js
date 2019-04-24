@@ -17,14 +17,13 @@ async function fun(ctx, next) {
       throw "参数错误";
     }
 
-    const { jvtc } = ctx.session;
+    
 
-    const jvtcObj = new global.Jvtc(jvtc);
+    const jvtcObj = ctx.jvtc;
 
     const errApp = [];
 
     for (const iterator of ids) {
-      console.log(iterator);
 
       const { id } = iterator;
 

@@ -17,7 +17,7 @@ function parsArgs(html) {
 
 function parsCookies(headers) {
   // console.log(headers);
-
+  
   let cookies = "";
   let endC = {};
   headers['set-cookie'].forEach((item) => {

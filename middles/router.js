@@ -12,8 +12,8 @@ jvtc_dll.forEach(dllname => {
   for (const key in route) {
 
     if (route.hasOwnProperty(key)) {
-      console.log(key);
-      
+
+      console.log('\u001b[49;31m' + key + '\033[0m');
       const fun = route[key];
 
       const [method, url] = key.split(" ")
@@ -34,6 +34,4 @@ jvtc_dll.forEach(dllname => {
 });
 console.log('\033[40;36m路由完成\033[0m');
 
-module.exports = function () {
-  return router.routes();
-}
+module.exports = router;

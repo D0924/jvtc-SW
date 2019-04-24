@@ -15,8 +15,7 @@ async function jvtc_fun() {
         const data = parsUserinfo(text);
 
         resolve([null, 0, data]);
-
-
+        
       } catch (error) {
         reject(error);
       }

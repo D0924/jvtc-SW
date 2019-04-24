@@ -22,8 +22,8 @@ function init(Jvtc) {
     ...dlls
   })
 
-  console.log(_Jvtc);
-  console.log(Jvtc);
+  // console.log(_Jvtc);
+  // console.log(Jvtc);
   console.log('\033[40;32m加载初始化对象完成\033[0m');
   
   return _Jvtc;
