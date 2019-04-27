@@ -16,12 +16,15 @@ const port = 3214;
 const app = new Koa();
 
 app.use(KoaCors({
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'DELETE', 'OPIONS'],
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   origin: function (ctx) {
     // if (ctx.url === '/test') {
     //   return "*"; // 允许来自所有域名请求
     // }
-    console.log("来源：",ctx.header.origin);
-
+    console.log("来源：", ctx.header.origin);
     return ctx.header.origin || ctx.origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
   },
 
