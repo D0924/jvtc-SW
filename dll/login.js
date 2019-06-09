@@ -28,17 +28,6 @@ async function jvtc_fun({ loginName, loginPwd }) {
   // args['Top1$StuLogin.x'] = ~~(Math.random() * 30);
   // args['Top1$StuLogin.y'] = ~~(Math.random() * 30);
 
-
-
-  //   __VIEWSTATE: 6+H0b6BX6qMGtIvLWKve3r/8Cv6ydh6DxAnMQ5fEroDhljCrosa1nkEKOP7b09mkNdhbyfbL4diep7UELwBlqx3zWmjNz6TDFIJKy1wav6XGzTJziscoMvGyXw+OfyUp0PL8D+xx/HK9xu9ORIqFLr8SmtMSrShA9KXiuzNe7bKgti9B
-  // __VIEWSTATEGENERATOR: 598EFD3C
-  // __EVENTVALIDATION: fQsSMwIIUfUgFi0P+In6RKB9Pe6HSyaetoHruGoUjfi0ihFVfRuK2tAKYole84D5YoXtXfaZs9O1kvWSNXYCoWcie/0kShlZfZwj649C3ZbU9/OXT+7JHu7TmoEOguhEI2Qr8b5bYuMsIoA3iPsdlfdon5ZrEOXZz4jZ3uMZwFtS0yurUpFXncvxjdV1WSkOyGCjmMzXEWvaWmSs
-  // UserName: 172052267
-  // UserPass: 172052267wx
-  // CheckCode: 00848
-  // Btn_OK.x: 27
-  // Btn_OK.y: 18
-
   return new Promise(async (resolve, reject) => {
 
     const res = await superagent.get(img_code)
@@ -93,7 +82,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
       }).catch(function (err) {
         // 如果发生网络错误
         console.log(err);
-        reject(error);
+        reject(err);
       });
     });
 

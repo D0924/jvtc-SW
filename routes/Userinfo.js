@@ -4,16 +4,7 @@ async function fun(ctx, next) {
 
   try {
     
-    const { jvtc } = ctx.session;
-    // console.log(ctx.session);
-    // console.log(jvtc);
-    
-    if (!jvtc) {
-      throw "登录超时";
-    }
-    
-    const [error, code, data] = await new global.Jvtc(jvtc).getUserinfo();
-    // console.log("===++");
+    const [error, code, data] = await ctx.jvtc.getUserinfo();
 
     if (!error && code === 0) {
       ctx.body = { code, message: error, data }

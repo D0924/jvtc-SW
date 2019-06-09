@@ -1,11 +1,10 @@
 const jvtcPrototype = require("../middles/jvtcPrototype.js");
-
 class Jvtc {
-	constructor({cookies,args} = {args:{}}) {
+	constructor({ cookies, args } = { args: {} }) {
 
 		this.o = {
-			cookies: cookies,
-			args: args
+			cookies,
+			args
 		};
 
 	}
@@ -14,97 +13,30 @@ class Jvtc {
 
 jvtcPrototype.init(Jvtc);
 
-module.exports = Jvtc;
+module.exports = function () {
 
+	return async (ctx, next) => {
 
+		const authorization = ctx.header['authorization'];
 
+		const token = authorization && authorization.split(' ') && authorization.split(' ')[1] || null;
+		let o = {};
+		if (token) {
 
-// ------------------以前的代码---------------------------
+			const { loginName } = await ctx.jwt.getPayload(token);
 
+			o = await ctx.store.get(loginName) || null;
+			 
+		}
+		
+		if(o !== null){
+			ctx.jvtc = new Jvtc(o);
 
-
-
-/*
-
-const url_o = "http://xz.jvtc.jx.cn/JVTC_XG/WebSite/ClassManageWeb/ClassActive_More.html";
-
-const o = {
-	cookies: "",
-	args: {}
+			await next();
+		}else{
+			ctx.throw(401);
+		}
+		
+		
+	}
 };
-
-function init() {
-
-	jvtc_get(url_o, { cookies: "", args: "" }, (err, res) => {
-		o.cookies = parsCookies(res.headers)
-
-		o.args = parsArgs(res.text);
-
-		event.emit("ok");
-	});
-
-}
-
-module.exports.login = async function ({ loginName, loginPwd }) {
-
-
-	return new Promise((resolve, reject) => {
-
-		event.on('ok', () => {
-			// console.log(o.args);
-
-			o.args['Top1$UserName'] = loginName;
-			o.args["Top1$PassWord"] = loginPwd;
-
-			jvtc_post(url_o, o, (err, res) => {
-
-				const $ = cheerio.load(res.text);
-				const rex = /\((.*?)\)/;
-
-				const html = new String($("script").html())
-
-				const ms = html.match(rex);
-
-				if (ms && ms.length > 2) {
-
-					console.log(ms[1])
-					reject(ms[1]);
-
-				} else {
-
-					// $("a").attr("href")
-					// http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx
-					o.cookies += parsCookies(res.headers);
-					console.log(o.cookies);
-
-					resolve([null, JSON.parse(JSON.stringify(o))]);
-
-				}
-
-			});
-
-		});
-
-		init();
-	}).catch((error) => {
-		return [error, null];
-	});
-}
-
-async function test() {
-	// console.log(123);
-	// console.log( module.exports.login());
-
-	const [error, res] = await module.exports.login({
-		loginName: "172052267", loginPwd: "542679"
-	});
-	jvtc_get("http://xz.jvtc.jx.cn/JVTC_XG/SystemForm/WorkInfo.aspx", o, (error, res) => {
-		console.log(res.text);
-	});
-
-	// console.log(error, res)
-
-}
-
-*/
-// test();

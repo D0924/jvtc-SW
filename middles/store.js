@@ -1,11 +1,8 @@
 //store.js
 const Redis = require("ioredis");
-const { Store } = require("koa-session2");
-console.log(Store);
 
-class RedisStore extends Store {
+class RedisStore {
     constructor({ host = "127.0.0.1", password = "", port = 6379, family = 4 } = {}) {
-        super();
         this.redis = new Redis({
             port,          // Redis port
             host,   // Redis host
@@ -15,22 +12,38 @@ class RedisStore extends Store {
         });
     }
 
-    async get(sid, ctx) {
-        let data = await this.redis.get(`SESSION:${sid}`);
+    async get(userid) {
+        let data = await this.redis.get(`${userid}`);
         return JSON.parse(data);
     }
 
-    async set(session, { sid = this.getID(24), maxAge = 1000000 } = {}, ctx) {
+    async set(userid, value, { maxAge = 86400000 } = {}) {
         try {
-            // Use redis set EX to automatically drop expired sessions
-            await this.redis.set(`SESSION:${sid}`, JSON.stringify(session), 'EX', maxAge / 1000);
-        } catch (e) { }
-        return sid;
+            /**
+                EX seconds - 设置指定的过期时间，以秒为单位。
+                PX 毫秒 - 设置指定的过期时间，以毫秒为单位。
+                NX - 仅设置密钥（如果密钥尚不存在）。
+                XX - 仅设置密钥（如果已存在）。
+             */
+            await this.redis.set(`${userid}`, JSON.stringify(value), 'EX', maxAge / 1000);
+        } catch (e) {
+
+        }
+        return value;
     }
 
-    async destroy(sid, ctx) {
-        return await this.redis.del(`SESSION:${sid}`);
+    async destroy(userid) {
+        return await this.redis.del(`${userid}`);
     }
 }
 
-module.exports = RedisStore;
+
+module.exports = function (options = {}) {
+
+    const redisStore = new RedisStore({ ...options });
+
+    return async (ctx, next) => {
+        ctx.store = redisStore;
+        await next();
+    };
+}

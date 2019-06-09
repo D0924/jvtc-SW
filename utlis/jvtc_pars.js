@@ -17,7 +17,7 @@ function parsArgs(html) {
 
 function parsCookies(headers) {
   // console.log(headers);
-
+  
   let cookies = "";
   let endC = {};
   headers['set-cookie'].forEach((item) => {
@@ -111,13 +111,16 @@ function parsStuActive(html) {
     // MyAction_View.aspx?Id=6123
 
     try {
+
       const id = $td
         .children('a')
+        .eq(0)
         .attr('href')
         .split('=')[1]
         ,
         name = $td
           .children('a')
+          .eq(0)
           .text()
         ,
         unit = $($td.get(1)).text()
@@ -234,7 +237,9 @@ function parsStuEnlightenRoomScore(html) {
 
     // MyAction_View.aspx?Id=6123
     // console.log($($td.get(0)).text());
-
+    if($td.length < 5){
+      return;
+    }
     try {
       const dorm = $($td.get(0)).text().replace(/[\s\n\r\t]/g, "")
         ,

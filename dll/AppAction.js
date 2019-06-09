@@ -8,9 +8,6 @@ async function jvtc_fun(id) {
 
 
   return new Promise((resolve, reject) => {
-    // console.log(this.o);
-
-    // console.log(AppAction + id,this.o.cookies);
 
     jvtc_get(AppAction + id, { cookies: this.o.cookies, args: "" }, (err, res) => {
       const { text } = res;
@@ -26,12 +23,6 @@ async function jvtc_fun(id) {
 
       jvtc_post(AppAction + id, { cookies: this.o.cookies, args }, (err, res) => {
         try {
-          // console.log(this.o);
-
-          // if (err) {
-          // 	throw err;
-          // }
-          // console.log(res.text);
 
           const $ = cheerio.load(res.text);
 

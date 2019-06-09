@@ -17,14 +17,13 @@ async function fun(ctx, next) {
       throw "参数错误";
     }
 
-    const { jvtc } = ctx.session;
+    
 
-    const jvtcObj = new global.Jvtc(jvtc);
+    const jvtcObj = ctx.jvtc;
 
     const errApp = [];
 
     for (const iterator of ids) {
-      console.log(iterator);
 
       const { id } = iterator;
 
@@ -48,7 +47,7 @@ async function fun(ctx, next) {
     }
 
     ctx.body = {
-      code: "0", message: "评论完成", details: {
+      code: 0, message: "评论完成", details: {
         errornum: errApp.length,
         errorlist: errApp
       }
