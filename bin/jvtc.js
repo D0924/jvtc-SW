@@ -25,12 +25,18 @@ module.exports = function () {
 
 			const { loginName } = await ctx.jwt.getPayload(token);
 
-			o = await ctx.store.get(loginName) || {};
-			
+			o = await ctx.store.get(loginName) || null;
+			 
 		}
+		
+		if(o !== null){
+			ctx.jvtc = new Jvtc(o);
 
-		ctx.jvtc = new Jvtc(o);
-
-		await next();
+			await next();
+		}else{
+			ctx.throw(401);
+		}
+		
+		
 	}
 };

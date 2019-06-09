@@ -82,7 +82,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
       }).catch(function (err) {
         // 如果发生网络错误
         console.log(err);
-        reject(error);
+        reject(err);
       });
     });
 
