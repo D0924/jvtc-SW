@@ -19,17 +19,9 @@ app.use(KoaCors({
     // if (ctx.url === '/test') {
     //   return "*"; // 允许来自所有域名请求
     // }
-<<<<<<< HEAD
-    const clientIp = ctx.header['x-forwarded-for'] || ctx.req.connection.remoteAddress||res.req.socket.remoteAddress;
-    console.log(clientIp);
-    
-    console.log("来源：", ctx.header.origin || ctx.origin);
-    return ctx.header.origin || ctx.origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
-=======
     const origin = ctx.header.origin || ctx.origin;
     console.log("Time:" + new Date(), "来源:", origin);
     return origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
->>>>>>> dev
   },
 }));
 
