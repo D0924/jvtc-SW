@@ -22,7 +22,7 @@
     "koa-jwt": "^3.5.1",
     "koa-router": "^7.4.0",
     "koa2-cors": "^2.0.6",
-    "superagent": "^4.1.0",
+    "superagent": "^5.1.0",
     "superagent-charset": "^1.2.0",
     "superagent-no-cache": "^0.1.1"
   },
