@@ -25,7 +25,7 @@ module.exports = function () {
 
 			const { loginName } = await ctx.jwt.getPayload(token);
 
-			o = await ctx.store.get(loginName) || null;
+			o = await ctx.store.get(loginName) || o;
 			 
 		}
 		

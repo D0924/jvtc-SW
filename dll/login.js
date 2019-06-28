@@ -68,6 +68,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
                 throw ms[1];
               }
             }
+            
             this.o.cookies += parsCookies(res.headers);
             // 登陆成功标志
             // this.isLogin = true;
