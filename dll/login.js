@@ -34,7 +34,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
       .set('Cookie', this.o.cookies);
 
     gm(res.body).toBuffer('jpg', (err, buffer) => {
-      if(err) throw err;
+      if (err) throw err;
 
       ocrClient.generalBasic(buffer.toString("base64")).then((result) => {
 
@@ -58,11 +58,19 @@ async function jvtc_fun({ loginName, loginPwd }) {
 
         // console.log(o.args);
         jvtc_post(login, { cookies: this.o.cookies, args }, (err, res) => {
-          
+
           try {
-            if(err){
-              throw err;
+            // if(err){
+            //   throw new Error("接口出错，请联系开发人员");
+            // }
+
+            // 对 重定向处理
+            if (err) {
+              if (err.status > 300 && err.status < 400) {
+                console.log('login=> 重定向');
+              }
             }
+
             const $ = cheerio.load(res.text);
             const html = new String($("script").html())
             if (html) {
@@ -72,7 +80,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
                 throw ms[1];
               }
             }
-            
+
             this.o.cookies += parsCookies(res.headers);
             // 登陆成功标志
             // this.isLogin = true;
@@ -86,7 +94,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
 
       }).catch(function (err) {
         // 如果发生网络错误
-        console.log(err);
+        // console.log(err);
         reject(err);
       });
     });

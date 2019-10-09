@@ -14,12 +14,12 @@ async function fun(ctx, next) {
     const { loginName, loginPwd } = JSON.parse(data);
 
     if (!loginName || !loginPwd) {
-      throw "账号密码不规范";
+      throw "请核对账号密码";
     }
 
-    console.log({
-      loginName, loginPwd
-    });
+    // console.log({
+    //   loginName, loginPwd
+    // });
 
     const [errmsg, code] = await ctx.jvtc.login({ loginName, loginPwd });
 
