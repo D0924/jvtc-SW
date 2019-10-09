@@ -8,6 +8,9 @@ async function jvtc_fun() {
   return new Promise((resolve, reject) => {
     jvtc_get(init, { cookies: "", args: "" }, (err, res) => {
       try {
+        if(err){
+          throw err;
+        }
         const { o } = this;
         
         o.cookies = parsCookies(res.headers)
@@ -20,6 +23,7 @@ async function jvtc_fun() {
           throw "失败";
         }
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });

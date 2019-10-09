@@ -58,7 +58,11 @@ async function jvtc_fun({ loginName, loginPwd }) {
 
         // console.log(o.args);
         jvtc_post(login, { cookies: this.o.cookies, args }, (err, res) => {
+          
           try {
+            if(err){
+              throw err;
+            }
             const $ = cheerio.load(res.text);
             const html = new String($("script").html())
             if (html) {
