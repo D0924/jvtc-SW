@@ -4,12 +4,13 @@ const router = require('./middles/router');
 const redisStore = require('./middles/store');
 const jvtc_jwt = require('./middles/jvtc_jwt');
 const KoaCors = require('koa2-cors');
+const logger = require('koa-logger');
 
 const Jvtc = require('./bin/jvtc');
 const { SECRET_OR_PRIVATE_KEY, FILTERS_URL, PORT } = require(process.env.NODE_ENV == 'development' ? './ocr.config.dev' : './ocr.config')
 
 const app = new Koa();
-
+app.use(logger());
 app.use(KoaCors({
   credentials: true,
   allowMethods: ['GET', 'POST', 'DELETE', 'OPIONS'],
@@ -20,7 +21,7 @@ app.use(KoaCors({
     //   return "*"; // 允许来自所有域名请求
     // }
     const origin = ctx.header.origin || ctx.origin;
-    console.log("Time:" + new Date(), "来源:", origin);
+    // console.log("Time:" + new Date(), "来源:", origin);
     return origin; // 这样就能只允许 http:/ / localhost: 8080 这个域名的请求了
   },
 }));

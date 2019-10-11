@@ -21,6 +21,7 @@ async function fun(ctx, next) {
     //   loginName, loginPwd
     // });
 
+
     const [errmsg, code] = await ctx.jvtc.login({ loginName, loginPwd });
 
     if (code == 0) {
@@ -31,9 +32,10 @@ async function fun(ctx, next) {
     } else {
       throw new Error(errmsg);
     }
-    const token = await ctx.jwt.sign({ loginName });
+    const cookies = ctx.jvtc.o.cookies;
 
-    ctx.body = { code, message: "登陆成功", token };
+    const token = await ctx.jwt.sign({ loginName });
+    ctx.body = { code, message: "登陆成功", token, cookies };
 
   } catch (error) {
     console.log(error);
@@ -45,5 +47,5 @@ async function fun(ctx, next) {
 }
 
 module.exports = {
-  'POST /login': fun
+  'POST /login': fun,
 }
