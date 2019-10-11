@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
-const { jvtc_get, jvtc_post } = require('../utlis/jvtc_request');
-const { parsArgs } = require('../utlis/jvtc_pars');
+const { jvtc_get, jvtc_post } = require('../utils/jvtc_request');
+const { parsArgs } = require('../utils/jvtc_pars');
 const { AppAction } = require('../apis/api');
 
 

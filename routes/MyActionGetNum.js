@@ -1,4 +1,4 @@
-const { parsePostData } = require('../utlis/jvtc_pars');
+const { parsePostData } = require('../utils/jvtc_pars');
 
 async function fun(ctx, next) {
 

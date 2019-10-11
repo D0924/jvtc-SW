@@ -1,6 +1,6 @@
 
-const { jvtc_get } = require('../utlis/jvtc_request');
-const { parsArgs, parsUserinfo } = require('../utlis/jvtc_pars');
+const { jvtc_get } = require('../utils/jvtc_request');
+const { parsArgs, parsUserinfo } = require('../utils/jvtc_pars');
 const { userinfo } = require('../apis/api');
 
 
@@ -11,6 +11,7 @@ async function jvtc_fun() {
     jvtc_get(userinfo, o, (err, res) => {
       try {
         const { text } = res;
+        console.log(text);
         o.args = parsArgs(text);
         const data = parsUserinfo(text);
 

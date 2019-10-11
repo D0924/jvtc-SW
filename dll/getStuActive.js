@@ -1,6 +1,6 @@
 
-const { jvtc_get } = require('../utlis/jvtc_request');
-const {  parsArgs, parsStuActive} = require('../utlis/jvtc_pars');
+const { jvtc_get } = require('../utils/jvtc_request');
+const {  parsArgs, parsStuActive} = require('../utils/jvtc_pars');
 const { StuActive } = require('../apis/api');
 
 async function jvtc_fun() {

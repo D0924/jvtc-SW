@@ -62,7 +62,7 @@ http://api.ncgame.cc/jvtc/*
 
 * bin 项目主要的程序 
   * jvtc.js 主程序
-* utlis 帮助工具 函数
+* utils 帮助工具 函数
 * dll 功能目录
 * routes 路由目录
 * middles 中间件目录
