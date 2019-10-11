@@ -32,7 +32,14 @@ async function fun(ctx, next) {
     } else {
       throw new Error(errmsg);
     }
-    const cookies = ctx.jvtc.o.cookies;
+    let cookies;
+    switch (ctx.query.type) {
+      case 'cookie':
+        cookies = ctx.jvtc.o.cookies;
+        break;
+      default:
+        break;
+    }
 
     const token = await ctx.jwt.sign({ loginName });
     ctx.body = { code, message: "登陆成功", token, cookies };
