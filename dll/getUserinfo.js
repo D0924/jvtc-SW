@@ -11,7 +11,6 @@ async function jvtc_fun() {
     jvtc_get(userinfo, o, (err, res) => {
       try {
         const { text } = res;
-        console.log(text);
         o.args = parsArgs(text);
         const data = parsUserinfo(text);
 
