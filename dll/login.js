@@ -30,11 +30,12 @@ async function jvtc_fun({ loginName, loginPwd }) {
         // 验证
         code = words_result && words_result.length && words_result[0].words;
         if (code && code.length == 5 && String(parseInt(code)).length == 5) {
-          console.log("Time:" + new Date(), `CODE: 识别 ${ 4 - i } 次成功`);
+          console.log("Time:" + new Date(), `CODE: 识别 ${4 - i} 次成功`);
           i = 0;
         }
-      } catch{
+      } catch (error) {
         // 不处理
+        console.log("Time:" + new Date(), `CODE: 识别失败 ERROR: `, error);
       } finally {
         i--;
       }
@@ -46,7 +47,7 @@ async function jvtc_fun({ loginName, loginPwd }) {
     const [err, data] = await jvtc_cookies(cookies, args);
 
     if (err) {
-      throw new Error(err);
+      return reject(err);
     }
     // 绑定状态
     this.o.cookies += data;

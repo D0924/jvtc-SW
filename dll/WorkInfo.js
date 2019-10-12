@@ -11,8 +11,10 @@ async function jvtc_fun() {
 
     jvtc_get(WorkInfo, o, (err, res) => {
       try {
-        
-        const { text } = res || {};
+        if(!res){
+          throw err;
+        }
+        const { text } = res;
         o.args = parsArgs(text);
 
         const data = parsWordInfo(text);

@@ -13,14 +13,15 @@ module.exports =async function (cookies, args) {
         //   throw new Error("接口出错，请联系开发人员");
         // }
         // 对 重定向处理
-        if (err) {
+        if (!res) {
           if (err.status > 300 && err.status < 400) {
             console.log('login=> 重定向');
           }
         }
-
+        // console.log(res.text);
+        
         const $ = cheerio.load(res.text);
-        const html = new String($("script").html())
+        const html = new String($('script').html())
         if (html) {
           const rex = /alert\('(.*?)'\);/;
           const ms = html.match(rex);

@@ -11,10 +11,13 @@ async function jvtc_fun() {
         // if(err){
         //   throw err;
         // }
+        if(!res){
+          throw err;
+        }
         const { o } = this;
         
         o.cookies = parsCookies(res.headers)
-
+        
         o.args = parsArgs(res.text);
         
         if (o.cookies && o.args) {

@@ -17,7 +17,7 @@ class RedisStore {
         return JSON.parse(data);
     }
 
-    async set(userid, value, { maxAge = 900000 } = {}) {
+    async set(userid, value, { maxAge = 7200000 } = {}) {
         try {
             /**
                 EX seconds - 设置指定的过期时间，以秒为单位。

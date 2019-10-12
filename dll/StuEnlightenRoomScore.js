@@ -11,6 +11,9 @@ async function jvtc_fun() {
 
     jvtc_get(StuEnlightenRoomScore, o, (err, res) => {
       try {
+        if(!res){
+          throw err;
+        }
         const { text } = res;
         o.args = parsArgs(text);
         

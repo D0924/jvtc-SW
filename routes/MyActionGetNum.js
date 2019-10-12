@@ -4,10 +4,6 @@ async function fun(ctx, next) {
 
   try {
     
-    
-    
-    
-    
     const [error, code, data] = await ctx.jvtc.MyActionGetNum();
 
     if (!error && code === 0) {

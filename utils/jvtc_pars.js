@@ -17,10 +17,10 @@ function parsArgs(html) {
 
 function parsCookies(headers) {
   // console.log(headers);
-  
+
   let cookies = "";
   let endC = {};
-  if(!headers['set-cookie']){
+  if (!headers['set-cookie']) {
     throw new Error("学工网处理出现问题，请重试！");
   }
   headers['set-cookie'].forEach((item) => {
@@ -169,6 +169,7 @@ function parsWordInfo(html) {
     flunk: null,
     dorm: null
   };
+
   /*
    {
       id:null,
@@ -180,6 +181,10 @@ function parsWordInfo(html) {
       stat:null
     }
   */
+  if (/本人所带班级/.test(html)) {
+    console.log(123);
+  }
+
   const $style = $('span.STYLE1');
   if (!$style || !$style.length) {
     throw "错误";
@@ -240,7 +245,7 @@ function parsStuEnlightenRoomScore(html) {
 
     // MyAction_View.aspx?Id=6123
     // console.log($($td.get(0)).text());
-    if($td.length < 5){
+    if ($td.length < 5) {
       return;
     }
     try {
@@ -278,7 +283,7 @@ function parsStuEnlightenRoomScore(html) {
 }
 
 function parsePostData(ctx) {
-  
+
   return new Promise((resolve, reject) => {
     try {
       let postdata = "";
@@ -296,6 +301,46 @@ function parsePostData(ctx) {
   })
 }
 
+// 老师相关
+
+function parseTeacherInfo(html) {
+
+  const $ = cheerio.load(html), userinfo = {
+    basicsinfo: {
+      UserID: null,
+      XGH: null,
+      UserName: null,
+      Polity: null,
+      UserType: null,
+      IsMarriage_0: null,
+      SchoolArea: null,
+      Unit: null,
+      Sex: null,
+      Nation: null
+    },
+  };
+
+  for (const key in userinfo) {
+    const info = userinfo[key];
+    // 获取基本资料
+    for (const key in info) {
+      info[key] = $('#Body table .TableBlack tr').find(`[name="PersonInfo1$${key}"]`).val();
+    }
+
+  }
+  return userinfo;
+}
+
+function parseTeacherReSetpass(html) {
+
+  const rex = /<script>alert\(\'学生(.*?)密码重置成功,请牢记！\'\)<\/script>/;
+  const rexErr = /<script>alert\(\'(.*?)\'\)<\/script>/;
+
+  return {
+    type: rex.test(html), msg: html.match(rexErr)[1]
+  };
+}
+
 module.exports = {
   parsCookies,
   parsArgs,
@@ -304,5 +349,8 @@ module.exports = {
   parsWordInfo,
   parsMyActionGetNum,
   parsStuEnlightenRoomScore,
-  parsePostData
+  parsePostData,
+  // 老师相关
+  parseTeacherInfo,
+  parseTeacherReSetpass
 }

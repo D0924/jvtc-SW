@@ -10,6 +10,9 @@ async function jvtc_fun() {
     const { o } = this;
     jvtc_get(userinfo, o, (err, res) => {
       try {
+        if(!res){
+          throw err;
+        }
         const { text } = res;
         o.args = parsArgs(text);
         const data = parsUserinfo(text);

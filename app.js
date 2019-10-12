@@ -35,7 +35,10 @@ app.use(async (ctx, next) => {
         msg: "身份验证失败"
       };
     } else {
-      throw err;
+      ctx.body = {
+        code: err.status,
+        msg: ctx.body && ctx.body.message || err.message || err
+      };
     }
   });
 });

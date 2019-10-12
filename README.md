@@ -1,21 +1,20 @@
-# jvtc-SW
-学工平台API接口
+# 学工平台API接口
 
-# 线上地址
+## 线上API地址
 
-http://api.ncgame.cc/jvtc/*
-
+[http://api.ncgame.cc/jvtc/*](http://api.ncgame.cc/jvtc/*)
 
 ### `更新记录`
-> 2019-04-23   
+> 2019-04-23     
 >   1.更换登陆接口(原来接口以被废除)  
 >   2.加入百度ocr 进行验证码识别 (成功率还行)
-> 2019-04-26  
+> 2019-04-26    
 >   将在 5月中旬左右 更换验证方式 届时 会使用jwt 目前 已完成开发 
 >   你可以 切换到 dev 分支 提前 clone 下来体验
+> 2019-10-12  
+>   准备开始接入老师端  
 
-## 已经实现webApi接口
-## 列表
+## 已经实现WEBAPI接口 列表
 
 ```http
 
@@ -50,7 +49,15 @@ http://api.ncgame.cc/jvtc/*
 - [x] 学工网首页展示信息 WorkInfo()
 - [x] 获取当前ABCDEF类素拓得分 MyActionGetNum()
 - [x] 宿舍卫生检查列表 StuEnlightenRoomScore()
+- [x] 老师信息获取
+- [x] 学生密码重置 
+
 ## 未实现
+
+- [ ] 请假审批、销假
+- [ ] 困难学生认定
+- [ ] 综测德育分数录入
+
 - [ ] 日常请假申请
 - [ ] 节假日请假申请
 - [ ] 日常请假记录列表
@@ -58,7 +65,8 @@ http://api.ncgame.cc/jvtc/*
 
 - [ ] 其他待定。。。
 
-> 项目结构
+
+> ## 项目结构
 
 * bin 项目主要的程序 
   * jvtc.js 主程序
@@ -66,16 +74,17 @@ http://api.ncgame.cc/jvtc/*
 * dll 功能目录
 * routes 路由目录
 * middles 中间件目录
+* logs 日志
 * app.js 主入口 
 
 ## 初始化 
 
 1. 将项目 “下载” 到本地 
-2. 运行 npm i 下载依赖
+2. 运行 `npm i` 下载依赖
 
 ## api 使用 
 
-> ### 运行 npm run app 日志信息会输出 地址和端口 复制然后 浏览器打开
+> ### 运行 npm run serve 日志信息会输出 地址和端口 复制然后 浏览器打开
 > * 登陆接口 为 /login post 传入json数据 
 > * {"loginName":"账号", "loginPwd":"密码"}
 > * 返回  {"code":状态值,"message":信息}

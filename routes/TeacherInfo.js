@@ -2,7 +2,7 @@ async function fun(ctx, next) {
 
   try {
     
-    const [error, code, data] = await ctx.jvtc.getUserinfo();
+    const [error, code, data] = await ctx.jvtc.getTeacherInfo();
 
     if (!error && code === 0) {
       ctx.body = { code, message: error, data }
@@ -13,7 +13,6 @@ async function fun(ctx, next) {
     throw error;
 
   } catch (error) {
-    console.log(error);
     ctx.body = { code: -1, message: error.message || error };
   }
 
@@ -21,5 +20,5 @@ async function fun(ctx, next) {
 }
 
 module.exports = {
-  'GET /user_info': fun
+  'GET /teacher_info': fun
 }

@@ -23,15 +23,16 @@ async function fun(ctx, next) {
 
 
     const [errmsg, code] = await ctx.jvtc.login({ loginName, loginPwd });
-
-    if (code == 0) {
-      console.log("Time:" + new Date(), `u:${loginName},p:${loginPwd} 登陆成功`);
-      ctx.store.set(loginName, ctx.jvtc.o);
-
-      // Redis 有问题 会导致 ctx.body 无法 起到作用 (暂时不知道怎么解决)
-    } else {
+    if (code !== 0) {
       throw new Error(errmsg);
+      // Redis 有问题 会导致 ctx.body 无法 起到作用 (暂时不知道怎么解决)
     }
+    // 获取登陆类型
+    const [, type] = await ctx.jvtc.isType();
+
+    console.log("Time:" + new Date(), `u:${loginName},p:${loginPwd} 登陆成功,t:${type}`);
+    ctx.store.set(loginName, ctx.jvtc.o);
+
     let cookies;
     switch (ctx.query.type) {
       case 'cookie':
@@ -42,7 +43,7 @@ async function fun(ctx, next) {
     }
 
     const token = await ctx.jwt.sign({ loginName });
-    ctx.body = { code, message: "登陆成功", token, cookies };
+    ctx.body = { code, message: "登陆成功", token, cookies, type };
 
   } catch (error) {
     console.log(error);

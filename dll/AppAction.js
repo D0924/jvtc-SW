@@ -23,7 +23,9 @@ async function jvtc_fun(id) {
 
       jvtc_post(AppAction + id, { cookies: this.o.cookies, args }, (err, res) => {
         try {
-
+          if(!res){
+            throw err;
+          }
           const $ = cheerio.load(res.text);
 
           const html = new String($("script").html())
