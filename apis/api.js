@@ -13,6 +13,7 @@ const StuEnlightenRoomScore = baseUrl + "SystemForm/Gardens/StuEnlightenRoomScor
 const TeacherInfo = baseUrl + "SystemForm/Personal/MyPerson.aspx";
 const Navigation = baseUrl + "SystemForm/Navigation.aspx";
 const TeacherReSetpass = baseUrl + "SystemForm/Class/TeacherReSetpass.aspx";
+const FDYAllLeaveExam = baseUrl + "SystemForm/Leave/FDYAllLeaveExam.aspx";
 
 module.exports = {
   login,
@@ -27,5 +28,6 @@ module.exports = {
   Navigation,
   // 老师相关
   TeacherInfo,
-  TeacherReSetpass
+  TeacherReSetpass,
+  FDYAllLeaveExam
 }
