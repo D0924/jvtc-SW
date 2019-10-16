@@ -1,9 +1,8 @@
 const { jvtc_post } = require('../utils/jvtc_request');
 const { parsArgs, parseTeacherFDYAllLeaveExam } = require('../utils/jvtc_pars');
 const { FDYAllLeaveExam } = require('../apis/api');
-const Iconv = require('iconv').Iconv;
-const iconv = new Iconv('UTF-8', 'gb2312');
-
+const iconv = require('iconv-lite');
+const { encode,json2form } = require('../utils/utils');
 async function jvtc_fun({ TermNo = '', ClassNo = '', StudentNo = '', StudentName = '', Status = 1, BtnSearch = '%B2%E9+%D1%AF' }) {
 
   return new Promise((resolve, reject) => {
@@ -14,15 +13,21 @@ async function jvtc_fun({ TermNo = '', ClassNo = '', StudentNo = '', StudentName
 
       const args = {
         ...this.o.args,
-        TermNo, ClassNo, StudentNo, StudentName: encodeURI(iconv.convert(StudentName).toString()), Status, BtnSearch
+        TermNo, ClassNo, StudentNo, StudentName: StudentName, Status, BtnSearch
       }
-
-      jvtc_post(FDYAllLeaveExam, { cookies: this.o.cookies, args }, (err, res) => {
+      
+      jvtc_post(FDYAllLeaveExam, { cookies: this.o.cookies, args:json2form(args)  }, (err, res) => {
         try {
           if (!res) {
             throw err;
           }
+          // console.log(new URLSearchParams(args).toString());
+          
+          // console.log(res);
+          // console.log(encode(StudentName));
 
+          console.log('=========');
+          
           const { list, parameters } = parseTeacherFDYAllLeaveExam(res.text);
 
           resolve([null, { list, parameters }]);

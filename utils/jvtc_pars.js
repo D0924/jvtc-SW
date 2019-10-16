@@ -8,11 +8,16 @@ function parsArgs(html) {
   const __VIEWSTATEGENERATOR = $('input[name=__VIEWSTATEGENERATOR]').val()
   const __EVENTVALIDATION = $('input[name=__EVENTVALIDATION]').val()
   const __VIEWSTATEENCRYPTED = $('input[name=__VIEWSTATEENCRYPTED]').val()
+  const __EVENTTARGET = $('input[name=__EVENTTARGET]').val()
+  const __EVENTARGUMENT = $('input[name=__EVENTARGUMENT]').val()
 
-  args.__VIEWSTATE = __VIEWSTATE;
-  args.__VIEWSTATEGENERATOR = __VIEWSTATEGENERATOR;
-  args.__EVENTVALIDATION = __EVENTVALIDATION;
-  args.__VIEWSTATEENCRYPTED = __VIEWSTATEENCRYPTED;
+  args.__VIEWSTATE = __VIEWSTATE || '';
+  args.__VIEWSTATEGENERATOR = __VIEWSTATEGENERATOR || '';
+  args.__EVENTVALIDATION = __EVENTVALIDATION || '';
+  args.__VIEWSTATEENCRYPTED = __VIEWSTATEENCRYPTED || '';
+  args.__EVENTTARGET = __EVENTTARGET || '';
+  args.__EVENTARGUMENT = __EVENTARGUMENT || '';
+
 
   return args;
 }
@@ -376,7 +381,7 @@ function parseTeacherFDYAllLeaveExam(html) {
   });
   // 获取内容
   console.log(trs.text());
-  
+
   if (trs.eq(0).text().trim().indexOf('未找到相关数据') === -1) {
     trs.each((index, item) => {
       const tds = $(item).children('td');
@@ -398,6 +403,38 @@ function parseTeacherFDYAllLeaveExam(html) {
 
 }
 
+function parsFDYAllLeaveExam_EditForm(html) {
+  const $ = cheerio.load(html);
+  const postData = {};
+  // 审批 获取 post数据
+  $('[name*=AllLeave1]').each((index, item) => {
+    if ($(item).attr('type') === 'radio') return;
+    postData[$(item).attr('name')] = $(item).val() || '';
+  });
+  $('[name*=FDYExam1]').each((index, item) => {
+    if ($(item).attr('type') === 'radio') return;
+    postData[$(item).attr('name')] = $(item).val() || '';
+  });
+  $('input:radio:checked').each((index, item) => {
+    postData[$(item).attr('name')] = $(item).val() || '';
+  });
+  return postData;
+}
+
+function parseTeacherFDYAllLeaveExamStat(html) {
+  const rexErr = /<script>alert\('操作成功!'\);<\/script>/;
+  try {
+    if (rexErr.test(html)) {
+      return {
+        stat: 1
+      };
+    }
+    throw new Error(html.match(/<script>alert\('(.*?)'\);<\/script>/) && html.match(/<script>alert\('(.*?)'\);<\/script>/).length && html.match(/<script>alert\('(.*?)'\);<\/script>/)[1]);
+  } catch (error) {
+    return { error: error };
+  }
+}
+
 module.exports = {
   parsCookies,
   parsArgs,
@@ -410,5 +447,7 @@ module.exports = {
   // 老师相关
   parseTeacherInfo,
   parseTeacherReSetpass,
-  parseTeacherFDYAllLeaveExam
+  parseTeacherFDYAllLeaveExam,
+  parsFDYAllLeaveExam_EditForm,
+  parseTeacherFDYAllLeaveExamStat
 }
