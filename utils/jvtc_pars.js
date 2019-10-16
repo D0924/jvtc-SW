@@ -435,6 +435,64 @@ function parseTeacherFDYAllLeaveExamStat(html) {
   }
 }
 
+
+function parseTeacherFDYLeaveExam(html) {
+  const $ = cheerio.load(html);
+  const optionsKey = ['OrderId', 'ClassNo', 'Status'];
+
+  const parameters = [
+    [],
+    [],
+    [],
+  ];
+  const list = [];
+  const trs = $('[class="white"] tr').not('.whitehead');
+  const keys = [
+    'stu_id',
+    'name',
+    'sex',
+    'date', 'x_date', 'reason', 'location', 'class',
+    'stat',
+    'period'];
+
+  optionsKey.forEach((item, index) => {
+    const p = parameters[index];
+    $(`[name="${item}"]`).children('option').each((index, item) => {
+      const text = $(item).text(),
+        val = $(item).val();
+      if (!text || !val) {
+        return;
+      }
+      p.push({
+        text,
+        val
+      });
+    });
+  });
+  // 获取内容
+  console.log(trs.text());
+
+  if (trs.eq(0).text().trim().indexOf('未找到相关数据') === -1) {
+    trs.each((index, item) => {
+      const tds = $(item).children('td');
+      const stuMap = {};
+      stuMap['id'] = (tds.eq(1).children('a').eq(0).attr('href').match(/Id=([0-9]+)/)[1]);
+      keys.forEach((item, index) => {
+        stuMap[item] = (tds.eq(index + 1).text());
+      });
+      console.log(stuMap);
+
+      list.push(stuMap);
+    });
+  }
+
+  return {
+    parameters,
+    list
+  }
+
+}
+
 module.exports = {
   parsCookies,
   parsArgs,
@@ -449,5 +507,6 @@ module.exports = {
   parseTeacherReSetpass,
   parseTeacherFDYAllLeaveExam,
   parsFDYAllLeaveExam_EditForm,
-  parseTeacherFDYAllLeaveExamStat
+  parseTeacherFDYAllLeaveExamStat,
+  parseTeacherFDYLeaveExam
 }
