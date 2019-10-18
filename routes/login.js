@@ -1,4 +1,5 @@
 const { parsePostData } = require('../utils/jvtc_pars');
+const blackUser = require('../middles/black_user');
 
 async function fun(ctx, next) {
 
@@ -13,6 +14,19 @@ async function fun(ctx, next) {
 
     const { loginName, loginPwd } = JSON.parse(data);
 
+    try {
+      await blackUser(loginName, ctx.store);
+    } catch (error) {
+      console.log(error);
+      
+      ctx.body = error.code && error || {
+        code: -1,
+        msg: error.msg
+      };
+      
+      return;
+    }
+
     if (!loginName || !loginPwd) {
       throw "请核对账号密码";
     }
@@ -20,7 +34,6 @@ async function fun(ctx, next) {
     // console.log({
     //   loginName, loginPwd
     // });
-
 
     const [errmsg, code] = await ctx.jvtc.login({ loginName, loginPwd });
     if (code !== 0) {
