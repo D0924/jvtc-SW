@@ -15,7 +15,9 @@ const Navigation = baseUrl + "SystemForm/Navigation.aspx";
 const TeacherReSetpass = baseUrl + "SystemForm/Class/TeacherReSetpass.aspx";
 const FDYAllLeaveExam = baseUrl + "SystemForm/Leave/FDYAllLeaveExam.aspx";
 const FDYAllLeaveExam_Edit = baseUrl + "SystemForm/Leave/FDYAllLeaveExam_Edit.aspx?Id="
-const FDYLeaveExam = baseUrl + "SystemForm/Leave/FDYLeaveExam.aspx"
+const FDYLeaveExam = baseUrl + "SystemForm/Leave/FDYLeaveExam.aspx";
+const FDYDisAllLeave = baseUrl + "SystemForm/Leave/FDYDisAllLeave.aspx";
+const FDYDisLeave = baseUrl + "SystemForm/Leave/FDYDisLeave.aspx";
 
 module.exports = {
   login,
@@ -33,5 +35,7 @@ module.exports = {
   TeacherReSetpass,
   FDYAllLeaveExam,
   FDYAllLeaveExam_Edit,
-  FDYLeaveExam
+  FDYLeaveExam,
+  FDYDisAllLeave,
+  FDYDisLeave
 }

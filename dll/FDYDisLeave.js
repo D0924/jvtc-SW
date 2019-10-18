@@ -1,12 +1,12 @@
 const { jvtc_post } = require('../utils/jvtc_request');
-const { parsArgs, parseTeacherFDYLeaveExam } = require('../utils/jvtc_pars');
-const { FDYLeaveExam } = require('../apis/api');
+const { parsArgs, parseTeacherFDYDisLeave } = require('../utils/jvtc_pars');
+const { FDYDisLeave } = require('../apis/api');
 const { json2form } = require('../utils/utils');
-async function jvtc_fun({ ids = [], OrderId = '', ClassNo = '', StudentNo = '', StudentName = '', Status = 1, BtnSearch = '%B2%E9+%D1%AF' }) {
+async function jvtc_fun({ ids = [], OrderId = '', ClassNo = '', LeaveType = '', StudentNo = '', StudentName = '', BtnSearch = '%B2%E9+%D1%AF' }) {
 
   return new Promise((resolve, reject) => {
 
-    jvtc_post(FDYLeaveExam, { cookies: this.o.cookies, args: {} }, (err, res) => {
+    jvtc_post(FDYDisLeave, { cookies: this.o.cookies, args: {} }, (err, res) => {
       const { text } = res;
       this.o.args = parsArgs(text);
       const ids_ = {};
@@ -17,19 +17,19 @@ async function jvtc_fun({ ids = [], OrderId = '', ClassNo = '', StudentNo = '', 
 
       const args = {
         ...this.o.args,
-        OrderId, ClassNo, StudentNo, StudentName: StudentName, Status, BtnSearch,
-        ...ids_
-      }
+        OrderId, ClassNo, StudentNo, StudentName: StudentName, LeaveType, BtnSearch,
+        ...ids_,
+      };
       if (ids.length) {
         args['JTSP'] = '批量审批通过'
       }
 
-      jvtc_post(FDYLeaveExam, { cookies: this.o.cookies, args: json2form(args) }, (err, res) => {
+      jvtc_post(FDYDisLeave, { cookies: this.o.cookies, args: json2form(args) }, (err, res) => {
         try {
           if (!res) {
             throw err;
           }
-          const { list, parameters, stat } = parseTeacherFDYLeaveExam(res.text);
+          const { list, parameters, stat } = parseTeacherFDYDisLeave(res.text);
           if (stat === 1) {
             return resolve([null, { stat: 1, msg: '操作成功' }]);
           }

@@ -25,7 +25,6 @@ exports.json2form = function (obj) {
     const endStr = encodeURIComponent(key) + "=" + val + "&";
     str += endStr;
   });
-  console.log(str);
   
   return str;
 }

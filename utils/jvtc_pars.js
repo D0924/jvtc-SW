@@ -189,7 +189,7 @@ function parsWordInfo(html) {
     }
   */
   if (/本人所带班级/.test(html)) {
-    console.log(123);
+    // console.log(123);
   }
 
   const $style = $('span.STYLE1');
@@ -308,6 +308,60 @@ function parsePostData(ctx) {
   })
 }
 
+
+/**
+ * 解析（节假）表格专用
+ */
+function parseTeacherArgs({ html, keys = [], additionalCB, fromIndex = 0, optionsKeys = [] }) {
+
+  const $ = cheerio.load(html);
+  const optionsKey = optionsKeys;
+
+  const parameters = [
+    ...(new Array(optionsKey.length).join().split(',').map(() => []))
+  ];
+  const list = [];
+  const trs = $('[class="white"] tr').not('.whitehead');
+
+  optionsKey.forEach((item, index) => {
+    const p = parameters[index];
+    $(`[name="${item}"]`).children('option').each((index, item) => {
+      const text = $(item).text(),
+        val = $(item).val();
+      if (!text || !val) {
+        return;
+      }
+      p.push({
+        text,
+        val
+      });
+    });
+  });
+  // 获取内容
+  console.log(trs.text());
+
+  if (trs.eq(0).text().trim().indexOf('未找到相关数据') === -1) {
+    trs.each((index, item) => {
+      const tds = $(item).children('td');
+      const stuMap = {};
+      if (additionalCB) {
+        const { key, value } = additionalCB(tds);
+        stuMap[key] = value;
+      }
+      keys.forEach((item, index) => {
+        stuMap[item] = (tds.eq(index + fromIndex).text());
+      });
+      // console.log(stuMap);
+
+      list.push(stuMap);
+    });
+  }
+  return {
+    parameters,
+    list
+  }
+}
+
 // 老师相关
 
 function parseTeacherInfo(html) {
@@ -349,57 +403,27 @@ function parseTeacherReSetpass(html) {
 }
 
 function parseTeacherFDYAllLeaveExam(html) {
-  const $ = cheerio.load(html);
-  const optionsKey = ['TermNo', 'ClassNo', 'Status'];
-
-  const parameters = [
-    [],
-    [],
-    [],
-  ];
-  const list = [];
-  const trs = $('[class="white"] tr').not('.whitehead');
+  const optionsKeys = ['TermNo', 'ClassNo', 'Status'];
   const keys = [
     'stu_id',
     'name',
+    'sex',
     'date', 'x_date', 'reason', 'location', 'class',
     'period', 'stat'];
 
-  optionsKey.forEach((item, index) => {
-    const p = parameters[index];
-    $(`[name="${item}"]`).children('option').each((index, item) => {
-      const text = $(item).text(),
-        val = $(item).val();
-      if (!text || !val) {
-        return;
-      }
-      p.push({
-        text,
-        val
-      });
-    });
+  const resData = parseTeacherArgs({
+    optionsKeys,
+    html,
+    keys,
+    additionalCB(tds) {
+      return {
+        key: 'id',
+        value: (tds.eq(0).children('a').eq(0).attr('href').match(/Id=([0-9]+)/)[1])
+      };
+    }
   });
-  // 获取内容
-  console.log(trs.text());
 
-  if (trs.eq(0).text().trim().indexOf('未找到相关数据') === -1) {
-    trs.each((index, item) => {
-      const tds = $(item).children('td');
-      const stuMap = {};
-      stuMap['id'] = (tds.eq(0).children('a').eq(0).attr('href').match(/Id=([0-9]+)/)[1]);
-      keys.forEach((item, index) => {
-        stuMap[item] = (tds.eq(index).text());
-      });
-      console.log(stuMap);
-
-      list.push(stuMap);
-    });
-  }
-
-  return {
-    parameters,
-    list
-  }
+  return resData;
 
 }
 
@@ -437,61 +461,98 @@ function parseTeacherFDYAllLeaveExamStat(html) {
 
 
 function parseTeacherFDYLeaveExam(html) {
-  const $ = cheerio.load(html);
-  const optionsKey = ['OrderId', 'ClassNo', 'Status'];
+  const rexErr = /<script>alert\('操作成功(.*?)'\);<\/script>/;
+  if (rexErr.test(html)) {
+    return {
+      stat: 1
+    };
+  }
 
-  const parameters = [
-    [],
-    [],
-    [],
-  ];
-  const list = [];
-  const trs = $('[class="white"] tr').not('.whitehead');
+  const optionsKeys = ['OrderId', 'ClassNo', 'Status'];
   const keys = [
-    'stu_id',
-    'name',
-    'sex',
+    'stu_id', 'name', 'sex',
     'date', 'x_date', 'reason', 'location', 'class',
-    'stat',
-    'period'];
-
-  optionsKey.forEach((item, index) => {
-    const p = parameters[index];
-    $(`[name="${item}"]`).children('option').each((index, item) => {
-      const text = $(item).text(),
-        val = $(item).val();
-      if (!text || !val) {
-        return;
-      }
-      p.push({
-        text,
-        val
-      });
-    });
+    'stat', 'period'
+  ];
+  const resData = parseTeacherArgs({
+    optionsKeys,
+    html,
+    keys,
+    fromIndex: 1,
+    additionalCB(tds) {
+      return {
+        key: 'id',
+        value: (tds.eq(0).children('input[name*=GridView]').attr('name'))
+      };
+    }
   });
-  // 获取内容
-  console.log(trs.text());
+  return resData;
+}
 
-  if (trs.eq(0).text().trim().indexOf('未找到相关数据') === -1) {
-    trs.each((index, item) => {
-      const tds = $(item).children('td');
-      const stuMap = {};
-      stuMap['id'] = (tds.eq(1).children('a').eq(0).attr('href').match(/Id=([0-9]+)/)[1]);
-      keys.forEach((item, index) => {
-        stuMap[item] = (tds.eq(index + 1).text());
-      });
-      console.log(stuMap);
 
-      list.push(stuMap);
-    });
+function parseTeacherFDYDisAllLeave(html) {
+  const rexErr = /<script>alert\('操作成功！'\);<\/script>/;
+  if (rexErr.test(html)) {
+    return {
+      stat: 1
+    };
   }
 
-  return {
-    parameters,
-    list
+  const optionsKeys = ['TermNo', 'ClassNo', 'LeaveType'];
+  const keys = [
+    'stu_id', 'name', 'sex',
+    'date', 'x_date', 'type', 'location', 'class', 'term'
+  ];
+
+  const resData = parseTeacherArgs({
+    optionsKeys,
+    html,
+    keys,
+    fromIndex: 2,
+    additionalCB(tds) {
+      return {
+        key: 'id',
+        value: (tds.eq(0).children('input[name*=GridView]').attr('name'))
+      };
+    }
+  });
+
+  return resData;
+}
+
+
+function parseTeacherFDYDisLeave(html) {
+  const rexErr = /<script>alert\('操作成功！'\);<\/script>/;
+  if (rexErr.test(html)) {
+    return {
+      stat: 1
+    };
   }
+
+  const optionsKeys = ['TermNo', 'ClassNo', 'Status'];
+  const keys = [
+    'stu_id', 'name', 'sex',
+    'date', 'x_date', 'reason', 'location', 'class',
+  ];
+
+  const resData = parseTeacherArgs({
+    optionsKeys,
+    html,
+    keys,
+    fromIndex: 2,
+    additionalCB(tds) {
+      return {
+        key: 'id',
+        value: (tds.eq(0).children('input[name*=GridView]').attr('name'))
+      };
+    }
+  });
+
+  return resData;
 
 }
+
+
 
 module.exports = {
   parsCookies,
@@ -508,5 +569,7 @@ module.exports = {
   parseTeacherFDYAllLeaveExam,
   parsFDYAllLeaveExam_EditForm,
   parseTeacherFDYAllLeaveExamStat,
-  parseTeacherFDYLeaveExam
+  parseTeacherFDYLeaveExam,
+  parseTeacherFDYDisAllLeave,
+  parseTeacherFDYDisLeave
 }
