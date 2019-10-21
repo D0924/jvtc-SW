@@ -18,6 +18,7 @@ const FDYAllLeaveExam_Edit = baseUrl + "SystemForm/Leave/FDYAllLeaveExam_Edit.as
 const FDYLeaveExam = baseUrl + "SystemForm/Leave/FDYLeaveExam.aspx";
 const FDYDisAllLeave = baseUrl + "SystemForm/Leave/FDYDisAllLeave.aspx";
 const FDYDisLeave = baseUrl + "SystemForm/Leave/FDYDisLeave.aspx";
+const TeacherChangePass = baseUrl +'SystemForm/Personal/ChangePass.aspx';
 
 module.exports = {
   login,
@@ -37,5 +38,6 @@ module.exports = {
   FDYAllLeaveExam_Edit,
   FDYLeaveExam,
   FDYDisAllLeave,
-  FDYDisLeave
+  FDYDisLeave,
+  TeacherChangePass
 }
