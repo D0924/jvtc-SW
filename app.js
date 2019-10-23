@@ -3,6 +3,7 @@ const jwt = require('koa-jwt');
 const router = require('./middles/router');
 const redisStore = require('./middles/store');
 const jvtc_jwt = require('./middles/jvtc_jwt');
+const apiMiddle = require('./middles/apiMiddle');
 const KoaCors = require('koa2-cors');
 const logger = require('koa-logger');
 
@@ -46,6 +47,7 @@ app.use(async (ctx, next) => {
 app.use(jwt({ secret: SECRET_OR_PRIVATE_KEY }).unless({ path: FILTERS_URL }));
 
 app.use(redisStore());
+app.use(apiMiddle());
 
 // app.use(blackUser());
 

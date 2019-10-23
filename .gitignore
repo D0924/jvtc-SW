@@ -2,3 +2,4 @@ node_modules
 /test
 ocr.config.js
 *.pub
+bmob.config.js

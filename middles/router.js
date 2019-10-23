@@ -14,9 +14,16 @@ jvtc_dll.forEach(dllname => {
     if (route.hasOwnProperty(key)) {
 
       console.log('\u001b[49;31m' + key + '\033[0m');
-      const fun = route[key];
+      const fun = async (ctx, next) => {
+        await route[key](ctx, next);
+        try {
+          ctx.dbx.apiCount.save(ctx.url);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-      const [method, url] = key.split(" ")
+      const [method, url] = key.split(" ");
 
       switch (method) {
         case "GET":
