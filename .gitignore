@@ -3,3 +3,4 @@ node_modules
 ocr.config.js
 *.pub
 bmob.config.js
+/www
