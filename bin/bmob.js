@@ -39,12 +39,28 @@ class ApiCount {
   }
 }
 
+class Msg {
+
+  constructor() {
+    this.table = Bmob.Query('msg')
+  }
+  async save(msg) {
+    try {
+      this.table.set("msg", msg)
+      await this.table.save();
+    } catch (error) {
+      console.log("ApiCount => ", error);
+    }
+  }
+}
+
 
 function init(secretKey, securityCode) {
   Bmob.initialize(secretKey, securityCode);
   return {
     ApiCount,
-    Student
+    Student,
+    Msg
   }
 }
 
