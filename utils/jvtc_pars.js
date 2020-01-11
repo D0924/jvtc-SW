@@ -58,7 +58,8 @@ function parsUserinfo(html) {
       IdCard: null,
       GetType1: null,
       BankName: null,
-      BankNo: null
+      BankNo: null,
+      OneCard: null,
     },
     contactinfo: {
       MoveTel: null,
