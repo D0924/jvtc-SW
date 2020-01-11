@@ -4,3 +4,4 @@ ocr.config.js
 *.pub
 bmob.config.js
 /www
+*.log
